@@ -10,7 +10,8 @@
     "typecheck": "tsrx-tsc --noEmit",
     "check": "bun run typecheck && bun run build",
     "icons:build": "bun scripts/build-icons.ts --svg src/lib/icons/svg --out src/lib/icons/icons.ts",
-    "icons:check": "bun scripts/build-icons.ts --svg src/lib/icons/svg --out src/lib/icons/icons.ts --check"
+    "icons:check": "bun scripts/build-icons.ts --svg src/lib/icons/svg --out src/lib/icons/icons.ts --check",
+    "update:effect:subtree": "bun scripts/update-effect-subtree.sh"
   },
   "dependencies": {
     "@octanejs/base-ui": "0.1.69",
