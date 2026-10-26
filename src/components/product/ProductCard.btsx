@@ -1,0 +1,32 @@
+import { Link } from "@octanejs/tanstack-router";
+import {ProductItem} from '@/lib/product/types'
+
+props {id, sku, name, price, media}: ProductItem
+setup
+  const primaryImg = media.find(m => m.isPrimary && m.type === 'image' && m.url)
+    ?? media.find(m => m.type === 'image' && m.url)
+div(key={id} className={ "-mt-0.5 -ml-0.5 border border-border"})
+  Link(
+    ~ to="https://podpak.me/bundle-and-save"
+    ~ className={"flex w-full h-full flex-col justify-between text-[17px] font-bold leading-6.375"}
+    ~ )
+    div(className={"relative w-full aspect-square overflow-hidden"})
+      div(className={"absolute top-2.5 left-2.5 z-10"})
+        div(className={"w-26 h-7.75 py-1.25 px-3.75 rounded-md text-[rgb(255,_255,_255)] text-[16px] font-normal leading-5.25 bg-[rgb(35,_35,_35)]"}) best seller
+      picture(className={"block w-full h-full"})
+          img(
+            ~ alt={primaryImg?.altText}
+            ~ width={420}
+            ~ height={420}
+            ~ src={primaryImg?.url}
+            ~ className={"block w-full h-full max-w-full object-cover object-left-top"}
+            ~ loading='eager'
+            ~ fetchPriority='high'
+            ~ )
+    div(className={"w-117.916 h-20.5 px-5 pb-4 "})
+      div(className={"w-107.916 h-9.5 mb-1 pb-1 text-[rgb(0,_0,_0)] border-b-2 "})
+        h5(className={"w-107.916 h-8 my-0 text-[24px] leading-8 "})
+          span(className="font-normal") #{name}
+      div(className={"flex w-107.916 h-6 justify-between "})
+        p(className={"w-15.47655 h-6 my-0 leading-6 "}) $#{price.basePrice}
+        div(className={"w-11.74415 h-6 leading-6"}) bundle

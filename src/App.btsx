@@ -1,7 +1,15 @@
 
 import Topbar from "./components/Topbar.btsx";
+import Hero from "./components/Hero.btsx";
+import ProductList from "./components/product/ProductList.btsx";
+import ProductFooter from "./components/product/ProductFooter.btsx";
+import Footer from "./components/Footer.btsx";
 props {}:{}
 
 fragment
   Topbar
-  main.page
+  main(className=' max-w-7xl m-auto')
+    Hero
+    ProductList
+    ProductFooter
+  Footer

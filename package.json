@@ -17,8 +17,9 @@
     "@octanejs/tanstack-router": "^0.3.2",
     "beast-tsrx": "0.13.8",
     "clsx": "^2.1.1",
-    "octane": "0.13.8",
-    "tailwind-merge": "^3.6.0"
+    "octane": "0.16.0",
+    "tailwind-merge": "^3.6.0",
+    "unsplash-js": "^8.0.1"
   },
   "devDependencies": {
     "@beastjs/cli": "0.3.3",
