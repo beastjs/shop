@@ -1,6 +1,7 @@
 import { Link } from "@octanejs/tanstack-router";
 import type { ProductCardItem } from '@/lib/product/card-types'
 import RunnerButton from "../../ui/RunnerButton.btsx";
+import { cartActions } from "@/features/cart";
 
 props {id, sku, name, price, media}: ProductCardItem
 setup
@@ -9,6 +10,12 @@ setup
   const photographerName = typeof primaryImg?.metadata?.photographerName === 'string' ? primaryImg.metadata.photographerName : undefined
   const photographerUrl = typeof primaryImg?.metadata?.photographerUrl === 'string' ? primaryImg.metadata.photographerUrl : undefined
   const unsplashUrl = typeof primaryImg?.metadata?.unsplashUrl === 'string' ? primaryImg.metadata.unsplashUrl : undefined
+  // The button sits inside the card's Link, so keep the click from navigating.
+  const addToCart = (event: MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    cartActions.add({ id, sku, name, price, media })
+  }
 div(key={id} className='px-4 py-5 group/product rounded-sm border border-transparent hover:bg-foreground hover:border-border/50 transition-colors duration-200 ease-out')
   Link(
     ~ to="https://podpak.me/bundle-and-save"
@@ -32,7 +39,7 @@ div(key={id} className='px-4 py-5 group/product rounded-sm border border-transpa
         h5(className={"h-8 font-[300] text-lg leading-8"}) #{name}
         p(className={"font-[400] text-xl leading-6"}) $#{price.basePrice}
       div(className={"relative flex items-center justify-between w-full h-6"})
-        RunnerButton(className='absolute z-10 top-1 w-full' label='add to cart' paint={'var(--mac-blue)'} )
+        RunnerButton(className='absolute z-10 top-1 w-full' label='add to cart' paint={'var(--mac-blue)'} onClick={addToCart})
         div(className={"absolute z-0 flex items-center justify-between w-full"})
           // p(className={"text-base leading-6 "}) $#{price.basePrice}
           p(className={"font-sans font-[300] text-sm uppercase opacity-60 leading-6"}) #{sku.split('-').pop()}

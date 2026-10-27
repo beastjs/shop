@@ -1,0 +1,24 @@
+import type { CartLine } from "../index";
+import { cartActions, formatMoney, lineKey } from "../index";
+
+props { line }: { line: CartLine }
+setup
+  const key = lineKey(line.productId, line.variantId)
+  const lineTotal = { ...line.snapshot.unitPrice, amount: line.snapshot.unitPrice.amount * line.quantity }
+li(className="flex gap-4 py-4")
+  if line.snapshot.image
+    img(src={line.snapshot.image} alt="" width={72} height={72} className="size-18 shrink-0 rounded-sm object-cover bg-neutral-100")
+  else
+    div(className="size-18 shrink-0 rounded-sm bg-neutral-100")
+  div(className="flex flex-1 min-w-0 flex-col justify-between")
+    div(className="flex items-start justify-between gap-3")
+      div(className="min-w-0")
+        p(className="truncate font-medium") #{line.snapshot.name}
+        p(className="text-sm opacity-60") #{formatMoney(line.snapshot.unitPrice)}
+      p(className="shrink-0 font-medium tabular-nums") #{formatMoney(lineTotal)}
+    div(className="flex items-center justify-between")
+      div(role="group" aria-label={`Quantity of ${line.snapshot.name}`} className="flex items-center rounded-md border border-border")
+        button(type="button" aria-label="Decrease quantity" onClick={() => cartActions.setQuantity(key, line.quantity - 1)} className="size-8 hover:bg-foreground/5") −
+        span(aria-live="polite" className="w-8 text-center tabular-nums text-sm") #{line.quantity}
+        button(type="button" aria-label="Increase quantity" disabled={line.quantity >= 99} onClick={() => cartActions.setQuantity(key, line.quantity + 1)} className="size-8 hover:bg-foreground/5 disabled:opacity-30") +
+      button(type="button" onClick={() => cartActions.remove(key)} className="text-sm underline opacity-60 hover:opacity-100") Remove

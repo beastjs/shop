@@ -1,6 +1,9 @@
 import { Link } from '@octanejs/tanstack-router'
 import { productCategories } from '@/lib/product/categories'
-import {Icon} from "@/lib/icons";
+import { Hydrate } from "octane";
+import { idle } from "octane/hydration";
+import CartButton from "@/features/cart/ui/CartButton.btsx";
+import CartDrawer from "@/features/cart/ui/CartDrawer.btsx";
 
 header#topbar(className='fixed top-0 z-100 flex items-center justify-between w-full h-16 px-8 bg-background/20 backdrop-blur-xl')
   Link(to="/" className='flex item-center gap-3')
@@ -11,4 +14,7 @@ header#topbar(className='fixed top-0 z-100 flex items-center justify-between w-f
   nav#navbar(className='flex items-center gap-1 text-sm')
     each category in productCategories key category.slug
       Link(to={'/' + category.slug} activeProps={{className: 'active-nav-item'}} className='font-[450] px-3 py-1 rounded-md whitespace-nowrap') #{category.name}
-  Icon(name='bag')
+  CartButton
+  // Split the drawer into its own chunk; it renders nothing until opened.
+  Hydrate(when={idle()})
+    CartDrawer

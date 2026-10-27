@@ -1,0 +1,96 @@
+import { createPortal, useEffect, useRef, useState } from "octane";
+import { Icon } from "@/lib/icons";
+import { cartActions, cartDrawerOpen$, cartState$, cartTotals$, formatMoney, lineKey } from "../index";
+import CartLineItem from "./CartLineItem.btsx";
+import { useSignal } from "./useSignal";
+
+module
+  const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+
+  // The Topbar uses backdrop-blur, which traps fixed children, so the drawer renders into <body>.
+  function DrawerPortal() {
+    return createPortal(DrawerBody, document.body, {})
+  }
+
+component DrawerBody
+  setup
+    const open = useSignal(cartDrawerOpen$)
+    const { cart, sync, error, adjustments } = useSignal(cartState$)
+    const totals = useSignal(cartTotals$)
+    const panelRef = useRef<HTMLElement | null>(null)
+    const [checkoutMessage, setCheckoutMessage] = useState<string | null>(null)
+
+    // Focus management while open: focus the panel, trap Tab, close on Escape, restore focus on close.
+    useEffect(() => {
+      if (!open) return
+      const panel = panelRef.current
+      panel?.querySelector<HTMLElement>(FOCUSABLE)?.focus()
+      const onKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Escape") return cartActions.close()
+        if (event.key !== "Tab" || !panel) return
+        const items = [...panel.querySelectorAll<HTMLElement>(FOCUSABLE)]
+        const first = items[0]
+        const last = items[items.length - 1]
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus() }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus() }
+      }
+      document.addEventListener("keydown", onKeyDown)
+      return () => {
+        document.removeEventListener("keydown", onKeyDown)
+        document.getElementById("cart-button")?.focus()
+      }
+    })
+
+    const checkout = async () => {
+      setCheckoutMessage(null)
+      const result = await cartActions.checkout()
+      if ("url" in result) window.location.assign(result.url)
+      else setCheckoutMessage(result.message)
+    }
+  if open
+    div(className="fixed inset-0 z-200")
+      div(aria-hidden="true" onClick={cartActions.close} className="absolute inset-0 bg-black/30 backdrop-blur-[2px]")
+      aside(
+        ~ ref={panelRef}
+        ~ role="dialog"
+        ~ aria-modal="true"
+        ~ aria-labelledby="cart-title"
+        ~ className="absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-background text-foreground shadow-2xl"
+        ~ )
+        header(className="flex items-center justify-between px-6 h-16 border-b border-border")
+          h2#cart-title(className="text-lg font-semibold") Your cart
+          button(type="button" aria-label="Close cart" onClick={cartActions.close} className="flex size-9 items-center justify-center rounded-full hover:bg-foreground/5")
+            Icon(name="close")
+        if adjustments.length > 0
+          div(role="status" className="mx-6 mt-4 rounded-md bg-amber-50 p-3 text-sm text-amber-900")
+            ul(className="space-y-1")
+              each note, index in adjustments key index
+                li #{note.message}
+            button(type="button" onClick={cartActions.dismissAdjustments} className="mt-2 underline") Dismiss
+        if cart.lines.length === 0
+          div(className="flex flex-1 flex-col items-center justify-center gap-2 px-6 text-center")
+            p(className="text-lg font-medium") Your cart is empty
+            p(className="text-sm opacity-60") Add something you like and it will show up here.
+        else
+          fragment
+            ul(data-lenis-prevent="" className="flex-1 overflow-y-auto overscroll-contain px-6 divide-y divide-border")
+              each line in cart.lines key lineKey(line.productId, line.variantId)
+                CartLineItem(line={line})
+            footer(className="border-t border-border px-6 py-5 space-y-3")
+              div(className="flex items-center justify-between text-base")
+                span Subtotal
+                span(className="font-semibold tabular-nums") #{formatMoney(totals.subtotal)}
+              p(className="text-xs opacity-60") Taxes and shipping are calculated at checkout.
+              if sync === "error"
+                p(role="alert" className="text-sm text-red-600")
+                  | Couldn't reach the store: #{error}.
+                  button(type="button" onClick={cartActions.retrySync} className="ml-1 underline") Retry
+              elseif sync === "syncing" || sync === "pending"
+                p(aria-live="polite" className="text-xs opacity-60") Checking prices and stock…
+              button(type="button" onClick={checkout} className="flex h-12 w-full items-center justify-center rounded-md bg-foreground text-background font-semibold hover:opacity-90") Checkout
+              if checkoutMessage
+                p(role="status" className="text-center text-sm opacity-70") #{checkoutMessage}
+
+props {}:{}
+
+DrawerPortal

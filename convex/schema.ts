@@ -35,6 +35,20 @@ const attributeDisplayType = v.union(
 );
 
 export default defineSchema({
+  // Guest carts keyed by an anonymous client-generated UUID. Lines are bounded (MAX_CART_LINES in carts.ts).
+  carts: defineTable({
+    cartKey: v.string(),
+    lines: v.array(
+      v.object({
+        productId: v.id("products"),
+        variantId: v.union(v.id("productVariants"), v.null()),
+        quantity: v.number(),
+      }),
+    ),
+    revision: v.number(),
+    updatedAt: v.number(),
+  }).index("by_cartKey", ["cartKey"]),
+
   categories: defineTable({
     externalId: v.string(),
     name: v.string(),
