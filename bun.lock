@@ -7,7 +7,7 @@
       "dependencies": {
         "@octanejs/base-ui": "0.1.69",
         "@octanejs/tanstack-router": "^0.3.2",
-        "beast-tsrx": "0.13.8",
+        "beast-tsrx": "0.16.0",
         "clsx": "^2.1.1",
         "convex": "^1.48.0",
         "effect": "^4.0.6",
@@ -373,7 +373,7 @@
 
     "acorn": ["acorn@8.19.0", "", { "bin": { "acorn": "bin/acorn" } }, "sha512-oJlA3XiRm7Cyk6qFD2Jn8ak9B7jSy0qy00ADO3+8dpT0LSjFihQYv4C02LFCSYJV3Q37xYwwRy5m+IpIiUzqWw=="],
 
-    "beast-tsrx": ["beast-tsrx@0.13.8", "", { "dependencies": { "@jridgewell/gen-mapping": "^0.3.13", "@jridgewell/remapping": "^2.3.5", "@jridgewell/trace-mapping": "^0.3.31", "entities": "^7.0.1" }, "peerDependencies": { "@octanejs/rsbuild-plugin": "^0.1.65", "@octanejs/rspack-plugin": "^0.2.4", "@rsbuild/core": "^2.0.0", "@rspack/core": "^2.0.0", "@tsrx/oxc": "0.20.0", "octane": "^0.13.8", "vite": "^8.0.16" }, "optionalPeers": ["@octanejs/rsbuild-plugin", "@octanejs/rspack-plugin", "@rsbuild/core", "@rspack/core", "@tsrx/oxc", "octane", "vite"], "bin": { "beast": "dist/cli.js" } }, "sha512-7yRwvfrpbjcR/RL6lqEcwk97cjd4mJKV6kXEIsaxHwTEE83h1hH0JZ8Y8z7PPtW/98tSGsRThSjNDZql/0xfeA=="],
+    "beast-tsrx": ["beast-tsrx@0.16.0", "", { "dependencies": { "@jridgewell/gen-mapping": "^0.3.13", "@jridgewell/remapping": "^2.3.5", "@jridgewell/trace-mapping": "^0.3.31", "entities": "^7.0.1" }, "peerDependencies": { "@octanejs/rsbuild-plugin": "^0.1.69", "@octanejs/rspack-plugin": "^0.2.8", "@rsbuild/core": "^2.0.0", "@rspack/core": "^2.0.0", "@tsrx/oxc": "0.20.0", "octane": "^0.16.0", "vite": "^8.0.16" }, "optionalPeers": ["@octanejs/rsbuild-plugin", "@octanejs/rspack-plugin", "@rsbuild/core", "@rspack/core", "@tsrx/oxc", "octane", "vite"], "bin": { "beast": "dist/cli.js" } }, "sha512-n6Hm9O+jqpZbyr5LBhgHAMhM1qTn8do55op7XsXb/76DKeZFVTFEBjdUxMIJIvQbJzQe2Q4hEZYJl4YanMiGLw=="],
 
     "boolbase": ["boolbase@1.0.0", "", {}, "sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww=="],
 
@@ -560,6 +560,8 @@
     "@beastjs/devtools/@octanejs/base-ui": ["@octanejs/base-ui@0.1.66", "", { "dependencies": { "@floating-ui/utils": "^0.2.12", "@octanejs/base-ui-utils": "0.1.14", "@octanejs/floating-ui": "0.1.66" }, "peerDependencies": { "@date-fns/tz": "^1.2.0", "date-fns": "^4.0.0", "luxon": "^3.7.2", "octane": "^0.13.0" }, "optionalPeers": ["@date-fns/tz", "date-fns", "luxon"] }, "sha512-hrBQ0YCFmfpqK8FDYJu7W4eu/wSSXcC4kX4LAHj6z56ze8LVqvM8dZ1ofSoHyUi3lzPMM/HDmzDqny40JxUjpg=="],
 
     "@beastjs/page-builder/@tsrx/oxc": ["@tsrx/oxc@0.20.0", "", { "dependencies": { "@oxc-project/types": "0.150.0", "oxfmt-current": "npm:oxfmt@0.68.0", "oxlint-current": "npm:oxlint@1.83.0", "oxlint-tsgolint": "7.0.2002", "pathe": "2.0.3", "tinyglobby": "0.2.17" }, "optionalDependencies": { "@tsrx/oxc-darwin-arm64": "0.20.0", "@tsrx/oxc-darwin-x64": "0.20.0", "@tsrx/oxc-linux-arm64-gnu": "0.20.0", "@tsrx/oxc-linux-arm64-musl": "0.20.0", "@tsrx/oxc-linux-x64-gnu": "0.20.0", "@tsrx/oxc-linux-x64-musl": "0.20.0", "@tsrx/oxc-win32-arm64-msvc": "0.20.0", "@tsrx/oxc-win32-x64-msvc": "0.20.0" }, "bin": { "oxfmt": "bin/oxfmt", "oxlint": "bin/oxlint", "oxc-tsrx": "bin/oxc-tsrx", "oxc-tsrx-fmt": "bin/oxc-tsrx-fmt", "oxc-tsrx-lsp": "bin/oxc-tsrx-lsp", "oxc-tsrx-lint": "bin/oxc-tsrx-lint" } }, "sha512-Rk6uw//7E6f64dGyVHNujwP0q+inTRSGtNqiEPk63B47XYmEzH/UIhrMSGUcgJ7cE3ta3N0xObWEGImvhTfAmQ=="],
+
+    "@beastjs/page-builder/beast-tsrx": ["beast-tsrx@0.13.8", "", { "dependencies": { "@jridgewell/gen-mapping": "^0.3.13", "@jridgewell/remapping": "^2.3.5", "@jridgewell/trace-mapping": "^0.3.31", "entities": "^7.0.1" }, "peerDependencies": { "@octanejs/rsbuild-plugin": "^0.1.65", "@octanejs/rspack-plugin": "^0.2.4", "@rsbuild/core": "^2.0.0", "@rspack/core": "^2.0.0", "@tsrx/oxc": "0.20.0", "octane": "^0.13.8", "vite": "^8.0.16" }, "optionalPeers": ["@octanejs/rsbuild-plugin", "@octanejs/rspack-plugin", "@rsbuild/core", "@rspack/core", "@tsrx/oxc", "octane", "vite"], "bin": { "beast": "dist/cli.js" } }, "sha512-7yRwvfrpbjcR/RL6lqEcwk97cjd4mJKV6kXEIsaxHwTEE83h1hH0JZ8Y8z7PPtW/98tSGsRThSjNDZql/0xfeA=="],
 
     "@beastjs/page-builder/octane": ["octane@0.13.8", "", { "dependencies": { "@tsrx/core": "^0.5.5", "@types/react": "^19.2.17", "@volar/language-core": "2.4.28", "@volar/typescript": "2.4.28", "csstype": "3.2.3", "devalue": "^5.8.2", "es-module-lexer": "^1.7.0", "esrap": "^2.3.2" }, "peerDependencies": { "@tsrx/oxc": "0.20.0", "react": "^19.0.0", "react-dom": "^19.0.0", "typescript": "^5.9.3 || ^6.0.0 || >=7.1.0-0", "vite": "^8.0.16" }, "optionalPeers": ["@tsrx/oxc", "react", "react-dom", "typescript", "vite"] }, "sha512-tOtuHvm3pD7HxEKysk2TW+vhiPgWiZFHNafY6AaBYpMIld7by6g4XeDCSUh1qAev1zA4i1n4+y86m+UW7JzQag=="],
 

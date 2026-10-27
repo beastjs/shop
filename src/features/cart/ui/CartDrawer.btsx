@@ -73,7 +73,7 @@ component DrawerBody
             p(className="text-sm opacity-60") Add something you like and it will show up here.
         else
           fragment
-            ul(data-lenis-prevent="" className="flex-1 overflow-y-auto overscroll-contain px-6 divide-y divide-border")
+            ul(data-lenis-prevent="" className="flex-1 overflow-y-auto overscroll-contain px-3 divide-y divide-border/50")
               each line in cart.lines key lineKey(line.productId, line.variantId)
                 CartLineItem(line={line})
             footer(className="border-t border-border px-6 py-5 space-y-3")

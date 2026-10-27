@@ -80,7 +80,7 @@ section(
         ~ onKeyDown={handleKeyDown}
         ~ className={"peer w-full h-full p-0 text-[18px] text-[rgb(13,_12,_34)] placeholder:text-[#9997a2] bg-transparent outline-none"}
         ~ )
-      kbd(aria-hidden="true" className={"shrink-0 px-2.75 py-0.5 rounded-md border-2 border-border/40 text-base font-sans font-[450] text-border/60 peer-focus:hidden"}) #{shortcutKey}
+      kbd(aria-hidden="true" className={"shrink-0 px-2.75 py-0.5 rounded-md border-2 border-border/40 text-base font-sans font-[650] text-border/60 peer-focus:hidden"}) #{shortcutKey}
       button(
         ~ type="submit"
         ~ className={"hidden _flex h-18 px-10 shrink-0 justify-center items-center rounded-2xl bg-[rgb(13,_12,_34)] text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(13,_12,_34,_0.16)] transition-transform hover:-translate-y-0.5"}

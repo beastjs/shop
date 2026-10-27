@@ -12,6 +12,6 @@ button#cart-button(
   ~ onClick={cartActions.toggle}
   ~ className="relative flex items-center justify-center size-10 rounded-full hover:bg-foreground/5 transition-colors"
   ~ )
-  Icon(name="bag")
+  Icon(name="bag" size={24})
   if count > 0
-    span(aria-hidden="true" className="absolute -top-0.5 -right-0.5 min-w-5 h-5 px-1 flex items-center justify-center rounded-full bg-mac-blue text-white text-[11px] font-semibold leading-none") #{count > 99 ? "99+" : count}
+    span(aria-hidden="true" className="absolute bottom-0.75 right-0 min-h-4.5 min-w-4.5 aspect-square flex items-center justify-center rounded-lg bg-mac-blue text-white text-[12px] font-[550] leading-none tracking-tighter") #{count > 99 ? "99+" : count}

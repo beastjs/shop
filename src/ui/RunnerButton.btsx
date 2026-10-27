@@ -21,6 +21,6 @@ button.runner(type="button" className={cn('flex! group/runner opacity-0 group-ho
       ~ stroke-linejoin="round"
       ~ pathLength="1"
       ~ )
-  Icon(name='plus' size={12})
+  Icon(name='add-to-bag' size={28} className='relative z-1 group-hover/runner:text-[#FFFFFF] transition-colors duration-280 delay-200 ease-out')
   span.runner-label(className='flex items-center justify-center relative z-1 font-sans font-[400] group-hover/runner:tracking-[0.01em] group-hover/runner:text-background dark:group-hover/runner:text-foreground transition-all duration-600') #{label}
   | #{children}
