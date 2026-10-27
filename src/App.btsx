@@ -1,15 +1,11 @@
 
 import Topbar from "./components/Topbar.btsx";
-import Hero from "./components/Hero.btsx";
-import ProductList from "./components/product/ProductList.btsx";
-import ProductFooter from "./components/product/ProductFooter.btsx";
 import Footer from "./components/Footer.btsx";
+import { Outlet } from "@octanejs/tanstack-router";
 props {}:{}
 
 fragment
   Topbar
   main(className=' max-w-7xl m-auto')
-    Hero
-    ProductList
-    ProductFooter
+    Outlet
   Footer

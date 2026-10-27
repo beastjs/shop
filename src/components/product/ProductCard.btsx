@@ -1,18 +1,22 @@
 import { Link } from "@octanejs/tanstack-router";
-import {ProductItem} from '@/lib/product/types'
+import type { ProductCardItem } from '@/lib/product/card-types'
+import RunnerButton from "../../ui/RunnerButton.btsx";
 
-props {id, sku, name, price, media}: ProductItem
+props {id, sku, name, price, media}: ProductCardItem
 setup
   const primaryImg = media.find(m => m.isPrimary && m.type === 'image' && m.url)
     ?? media.find(m => m.type === 'image' && m.url)
-div(key={id} className={ "-mt-0.5 -ml-0.5 border border-border"})
+  const photographerName = typeof primaryImg?.metadata?.photographerName === 'string' ? primaryImg.metadata.photographerName : undefined
+  const photographerUrl = typeof primaryImg?.metadata?.photographerUrl === 'string' ? primaryImg.metadata.photographerUrl : undefined
+  const unsplashUrl = typeof primaryImg?.metadata?.unsplashUrl === 'string' ? primaryImg.metadata.unsplashUrl : undefined
+div(key={id} className='p-4 group/product')
   Link(
     ~ to="https://podpak.me/bundle-and-save"
     ~ className={"flex w-full h-full flex-col justify-between text-[17px] font-bold leading-6.375"}
     ~ )
     div(className={"relative w-full aspect-square overflow-hidden"})
       div(className={"absolute top-2.5 left-2.5 z-10"})
-        div(className={"w-26 h-7.75 py-1.25 px-3.75 rounded-md text-[rgb(255,_255,_255)] text-[16px] font-normal leading-5.25 bg-[rgb(35,_35,_35)]"}) best seller
+        div(className={"w-26 h-7.75 py-1.25 px-3.75 rounded-sm text-[rgb(255,_255,_255)] text-[16px] font-normal leading-5.25 bg-[rgb(35,_35,_35)]"}) best seller
       picture(className={"block w-full h-full"})
           img(
             ~ alt={primaryImg?.altText}
@@ -23,10 +27,18 @@ div(key={id} className={ "-mt-0.5 -ml-0.5 border border-border"})
             ~ loading='eager'
             ~ fetchPriority='high'
             ~ )
-    div(className={"w-117.916 h-20.5 px-5 pb-4 "})
-      div(className={"w-107.916 h-9.5 mb-1 pb-1 text-[rgb(0,_0,_0)] border-b-2 "})
-        h5(className={"w-107.916 h-8 my-0 text-[24px] leading-8 "})
-          span(className="font-normal") #{name}
-      div(className={"flex w-107.916 h-6 justify-between "})
-        p(className={"w-15.47655 h-6 my-0 leading-6 "}) $#{price.basePrice}
-        div(className={"w-11.74415 h-6 leading-6"}) bundle
+    div(className={"h-24 pb-2 "})
+      div(className={"flex items-center justify-between px-3 w-full h-12 mb-1.5 border-b-3 border-border/20"})
+        h5(className={"h-8 font-[300] text-xl leading-8"}) #{name}
+        p(className={"font-[400] text-xl leading-6 "}) $#{price.basePrice}
+      div(className={"relative flex items-center justify-between w-full h-6"})
+        RunnerButton(className='absolute z-10 top-0 w-full' ) add to cart
+        div(className={"absolute z-0 flex items-center justify-between w-full"})
+          // p(className={"text-base leading-6 "}) $#{price.basePrice}
+          p(className={"font-sans font-[300] text-sm uppercase opacity-60 leading-6"}) #{sku.split('-').pop()}
+          if photographerName && photographerUrl && unsplashUrl
+            p(className="text-xs text-neutral-500 leading-6 font-[300]")
+              | Photo by
+              a(href={photographerUrl} target="_blank" rel="noreferrer" className="ml-1 underline") #{photographerName}
+              | on
+              a(href={unsplashUrl} target="_blank" rel="noreferrer" className="ml-1 underline") Unsplash

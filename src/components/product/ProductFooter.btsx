@@ -1,44 +1,44 @@
 
-section(class="flex relative z-[1] w-[1313px] h-[24px] pt-[56px] pr-[64px] pb-[40px] pl-[64px] flex-col items-center [font-family:Gucci_Sans_Pro,_sans-serif] text-center bg-[rgb(255,_255,_255)]")
-  h2(class="w-[135.703px] h-[24px] max-w-[872px] mt-0 mb-0 text-[16px] leading-[24px] tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap] [transform:matrix(1,_0,_0,_1,_0,_0)] [transform-origin:67.8516px_12px]") Gucci Services
-div(class="flex w-[1312px] h-[554.672px] min-w-[auto] min-h-[auto] overflow-x-auto overflow-y-hidden col-end-[span_12] gap-y-[40px] gap-x-[40px] [font-family:Gucci_Sans_Pro,_sans-serif]")
+section(className="flex relative w-full h-32 items-center justify-center")
+  h2(className={"w-33.92575 h-6 max-w-218 my-0 text-[16px] leading-6 tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap] [transform:matrix(1,_0,_0,_1,_0,_0)] [transform-origin:67.8516px_12px]"}) Gucci Services
+div(className={"flex w-328 h-138.668 min-w-[auto] min-h-[auto] overflow-x-auto overflow-y-hidden col-end-[span_12] gap-10 [font-family:Gucci_Sans_Pro,_sans-serif]"})
   section(
     ~ aria-label="Book an Appointment"
-    ~ class="flex w-[410.664px] flex-col grow basis-[0%] justify-items-center gap-y-[32px] gap-x-[32px] [transform-origin:205.332px_277.336px]"
+    ~ className={"flex w-102.666 flex-col grow basis-[0%] justify-items-center gap-8 [transform-origin:205.332px_277.336px]"}
     ~ )
     figure(
       ~ aria-hidden="false"
-      ~ class="w-[410.664px] h-[410.664px] mt-0 mr-0 mb-0 ml-0 bg-[rgb(255,_255,_255)] [transform-origin:205.332px_205.332px]"
+      ~ className={"w-102.666 h-102.666 m-0 bg-[rgb(255,_255,_255)] [transform-origin:205.332px_205.332px]"}
       ~ )
-      div(class="relative w-[410.664px] h-[410.664px] [transform-origin:205.332px_205.332px]")
+      div(className={"relative w-102.666 h-102.666 [transform-origin:205.332px_205.332px]"})
         a(
           ~ href="https://www.gucci.com/au/en_au/store?filters=your_private_appointment"
           ~ title=""
           ~ aria-label="Book an Appointment"
           ~ aria-hidden="true"
-          ~ class="flex absolute right-0 bottom-0 left-0 z-[1] w-[410.664px] h-[410.664px] justify-center items-center text-[rgb(0,_0,_238)] [transform-origin:205.332px_205.332px]"
+          ~ className={"flex absolute right-0 bottom-0 left-0 z-1 w-102.666 h-102.666 justify-center items-center text-[rgb(0,_0,_238)] [transform-origin:205.332px_205.332px]"}
           ~ )
-        div(class="w-[410.664px] h-[410.664px] [transform-origin:205.332px_205.332px]")
-          div(class="relative w-[410.664px] h-[410.664px] aspect-square overflow-x-hidden overflow-y-hidden [transform-origin:205.332px_205.332px]")
+        div(className={"w-102.666 h-102.666 [transform-origin:205.332px_205.332px]"})
+          div(className={"relative w-102.666 h-102.666 aspect-square overflow-x-hidden overflow-y-hidden [transform-origin:205.332px_205.332px]"})
             video(
               ~ poster="https://media.gucci.com/cms/spctf1/3X5xukLNi7MkoyxitZ9drX/fb57b64c3bb17a2bd95e73442d1d0caa/DAYLIGHT_DESAT_PENTAGON_1080x1080_-_frame_at_0m0s.jpg"
               ~ aria-label="Book an Appointment"
-              ~ class="block relative z-0 w-[410.664px] h-[410.664px] aspect-square [transform-origin:205.332px_205.332px] [scale:1] object-cover"
+              ~ className={"block relative z-0 w-102.666 h-102.666 aspect-square [transform-origin:205.332px_205.332px] [scale:1] object-cover"}
               ~ )
               source(src="https://fastly-signed-eu-west-1-prod.brightcovecdn.com/media/v1/pmp4/static/clear/2924921183001/42c1cdc5-6e3f-497d-a7b7-e93b05192168/2f3095cc-006c-4623-9f17-95f49fcbdb1a/main.mp4?fastly_token=NmFkZmNiOThfNzVjYzU0NDI3MzU2ZmQwMjA0NTk0ZTU5YmFmYTI4YmQ2ZDIyYThlZTkyYjUxMTA3OWFmZjliM2IyYjgxZGE1MF8vL2Zhc3RseS1zaWduZWQtZXUtd2VzdC0xLXByb2QuYnJpZ2h0Y292ZWNkbi5jb20vbWVkaWEvdjEvcG1wNC9zdGF0aWMvY2xlYXIvMjkyNDkyMTE4MzAwMS80MmMxY2RjNS02ZTNmLTQ5N2QtYTdiNy1lOTNiMDUxOTIxNjgvMmYzMDk1Y2MtMDA2Yy00NjIzLTlmMTctOTVmNDlmY2JkYjFhL21haW4ubXA0")
               track
             div(
               ~ aria-hidden="true"
-              ~ class="absolute top-[359.664px] right-[241.156px] bottom-0 left-0 z-[-1] opacity-[0]"
+              ~ className={"absolute top-89.916 right-60.289 bottom-0 left-0 -z-1 opacity-[0]"}
               ~ )
-              p(aria-hidden="true" class="h-[19px]") Book an Appointment
+              p(aria-hidden="true" className={"h-4.75"}) Book an Appointment
             div(
               ~ dir="ltr"
-              ~ class="grid absolute top-0 right-0 bottom-[338.664px] left-[370.664px] z-[1] w-[24px] h-[56px] mt-[16px] mr-[16px] grid-cols-[24px] grid-rows-[24px_24px] gap-y-[8px]"
+              ~ className={"grid absolute top-0 right-0 bottom-84.666 left-92.666 z-1 w-6 h-14 mt-4 mr-4 grid-cols-[24px] grid-rows-[24px_24px] gap-y-2"}
               ~ )
               button(
                 ~ aria-label="play"
-                ~ class="flex relative z-0 pt-0 pr-0 pb-0 pl-0 justify-center items-center [font-family:Gucci_Sans_Pro,_sans-serif] bg-[rgba(0,_0,_0,_0)] border-t-0 border-r-0 border-b-0 border-l-0 [border-top-style:none] [border-right-style:none] [border-bottom-style:none] [border-left-style:none] rounded-tl-[50%] rounded-tr-[50%] rounded-br-[50%] rounded-bl-[50%]"
+                ~ className={"flex relative z-0 p-0 justify-center items-center [font-family:Gucci_Sans_Pro,_sans-serif] bg-[rgba(0,_0,_0,_0)] border-t-0 border-r-0 border-b-0 border-l-0 [border-top-style:none] [border-right-style:none] [border-bottom-style:none] [border-left-style:none] rounded-[50%]"}
                 ~ )
                 svg(
                   ~ width="12"
@@ -47,78 +47,78 @@ div(class="flex w-[1312px] h-[554.672px] min-w-[auto] min-h-[auto] overflow-x-au
                   ~ fill="none"
                   ~ xmlns="http://www.w3.org/2000/svg"
                   ~ aria-hidden="true"
-                  ~ class="flex z-[1]"
+                  ~ className={"flex z-1"}
                   ~ )
                   g
                     path(
                       ~ d="M4.5 2V10H3C3.02297 9.51282 3.14541 7.42994 3.15918 6.30371V5.67676C3.14482 4.5377 3.07249 2.47453 3 2H4.5Z"
                       ~ fill="var(--_g-icon-fill-color)"
-                      ~ class="fill-[rgb(255,_255,_255)]"
+                      ~ className="fill-[rgb(255,_255,_255)]"
                       ~ )
                     path(
                       ~ d="M9 2C8.97703 2.48718 8.85459 4.57006 8.84082 5.69629V6.32324C8.85518 7.4623 8.92752 9.52547 9 10H7.5V2H9Z"
                       ~ fill="var(--_g-icon-fill-color)"
-                      ~ class="fill-[rgb(255,_255,_255)]"
+                      ~ className="fill-[rgb(255,_255,_255)]"
                       ~ )
-                  g(class="opacity-[0]")
+                  g(className="opacity-[0]")
                     path(
                       ~ d="M4 8.5V3.5C4 3.5 5.51312 4.31436 6.5 4.80329C7.46657 5.28216 9 5.97978 9 5.97978C9 5.97978 7.46649 6.68992 6.5 7.17656C5.51303 7.67351 4 8.5 4 8.5Z"
                       ~ fill="var(--_g-icon-fill-color)"
-                      ~ class="fill-[rgb(255,_255,_255)]"
+                      ~ className="fill-[rgb(255,_255,_255)]"
                       ~ )
-    div(class="flex w-[378.664px] h-[80.0078px] mr-[16px] mb-[32px] ml-[16px] flex-col grow-[2] basis-[0%] items-center text-center [transform-origin:189.332px_40.0039px]")
-      h3(class="w-[198.133px] h-[24px] mt-0 mb-0 text-[16px] leading-[24px] tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap]") Book an Appointment
-      div(class="flex w-[87.2969px] h-[24px] mt-[32px] flex-col items-center gap-y-[24px] gap-x-[24px]")
-        h2(class="w-[87.2969px] h-[24px] mt-0 mb-0 text-[16px] font-medium leading-[24px] tracking-[-0.64px] [outline-width:0px]")
+    div(className={"flex w-94.666 h-20.00195 mx-4 mb-8 flex-col grow-[2] basis-[0%] items-center text-center [transform-origin:189.332px_40.0039px]"})
+      h3(className={"w-49.53325 h-6 my-0 text-[16px] leading-6 tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap]"}) Book an Appointment
+      div(className={"flex w-21.824225 h-6 mt-8 flex-col items-center gap-6"})
+        h2(className={"w-21.824225 h-6 my-0 text-[16px] font-medium leading-6 tracking-[-0.64px] [outline-width:0px]"})
           a(
             ~ href="https://www.gucci.com/au/en_au/store?filters=your_private_appointment"
             ~ title="Find a Store"
             ~ aria-label="Find a Store"
             ~ aria-hidden="false"
-            ~ class="inline-flex w-[87.2969px] h-[24px] justify-center items-center gap-y-[8px] gap-x-[8px] [transform:matrix(1,_0,_0,_1,_0,_0)]"
+            ~ className={"inline-flex w-21.824225 h-6 justify-center items-center gap-2 [transform:matrix(1,_0,_0,_1,_0,_0)]"}
             ~ )
             span(
               ~ aria-hidden="true"
-              ~ class="relative w-[87.2969px] h-[24px] overflow-x-hidden overflow-y-hidden"
+              ~ className={"relative w-21.824225 h-6 overflow-x-hidden overflow-y-hidden"}
               ~ )
               | Find a Store
   section(
     ~ aria-label="Personalisation"
-    ~ class="flex w-[410.672px] flex-col grow basis-[0%] justify-items-center gap-y-[32px] gap-x-[32px] [transform-origin:205.336px_277.336px]"
+    ~ className={"flex w-102.668 flex-col grow basis-[0%] justify-items-center gap-8 [transform-origin:205.336px_277.336px]"}
     ~ )
     figure(
       ~ aria-hidden="false"
-      ~ class="w-[410.672px] h-[410.672px] mt-0 mr-0 mb-0 ml-0 bg-[rgb(255,_255,_255)]"
+      ~ className={"w-102.668 h-102.668 m-0 bg-[rgb(255,_255,_255)]"}
       ~ )
-      div(class="relative h-[410.672px]")
+      div(className={"relative h-102.668"})
         a(
           ~ href="https://www.gucci.com/au/en_au/nst/monogramming"
           ~ title=""
           ~ aria-label="An artisan applies gold colored Gucci embossing to the strap of the black leather Gucci Horsebit 1955 handbag."
           ~ aria-hidden="true"
-          ~ class="flex absolute right-0 bottom-0 left-0 z-[1] h-[410.672px] justify-center items-center text-[rgb(0,_0,_238)]"
+          ~ className={"flex absolute right-0 bottom-0 left-0 z-1 h-102.668 justify-center items-center text-[rgb(0,_0,_238)]"}
           ~ )
-        div(class="h-[410.672px]")
-          div(class="relative h-[410.672px] aspect-square overflow-x-hidden overflow-y-hidden")
+        div(className={"h-102.668"})
+          div(className={"relative h-102.668 aspect-square overflow-x-hidden overflow-y-hidden"})
             video(
               ~ poster="https://media.gucci.com/cms/spctf1/6LMjvuCRv94bL6DYOQM9Hk/792f00b0edd69e7f32e1820415a8dc60/Embossing_1080x1080.jpg"
               ~ aria-label="Showcasing Gucci Embossing"
-              ~ class="block relative z-0 w-[410.672px] h-[410.672px] aspect-square [scale:1] object-cover"
+              ~ className={"block relative z-0 w-102.668 h-102.668 aspect-square [scale:1] object-cover"}
               ~ )
               source(src="https://fastly-signed-eu-west-1-prod.brightcovecdn.com/media/v1/pmp4/static/clear/2924921183001/9f50c42d-e597-4391-9dee-2beb07fd50e1/c0cdb6be-72de-4f4b-afae-30cf95735dd9/main.mp4?fastly_token=NmFkZmNiOThfMDliNjBiMzllODBkZGQwMGFiM2Q3YWVlNTI4YTgwMzIwM2ViZjgzODg0MmYxOWE5YjQ5ZWM5M2MxZmFiMjBiOV8vL2Zhc3RseS1zaWduZWQtZXUtd2VzdC0xLXByb2QuYnJpZ2h0Y292ZWNkbi5jb20vbWVkaWEvdjEvcG1wNC9zdGF0aWMvY2xlYXIvMjkyNDkyMTE4MzAwMS85ZjUwYzQyZC1lNTk3LTQzOTEtOWRlZS0yYmViMDdmZDUwZTEvYzBjZGI2YmUtNzJkZS00ZjRiLWFmYWUtMzBjZjk1NzM1ZGQ5L21haW4ubXA0")
               track
             div(
               ~ aria-hidden="true"
-              ~ class="absolute top-[321.672px] right-0 bottom-0 left-0 z-[-1] opacity-[0]"
+              ~ className={"absolute top-80.418 right-0 bottom-0 left-0 -z-1 opacity-[0]"}
               ~ )
-              p(aria-hidden="true" class="h-[57px]") An artisan applies gold colored Gucci embossing to the strap of the black leather Gucci Horsebit 1955 handbag.
+              p(aria-hidden="true" className={"h-14.25"}) An artisan applies gold colored Gucci embossing to the strap of the black leather Gucci Horsebit 1955 handbag.
             div(
               ~ dir="ltr"
-              ~ class="grid absolute top-0 right-0 bottom-[338.672px] left-[370.672px] z-[1] w-[24px] h-[56px] mt-[16px] mr-[16px] grid-cols-[24px] grid-rows-[24px_24px] gap-y-[8px]"
+              ~ className={"grid absolute top-0 right-0 bottom-84.668 left-92.668 z-1 w-6 h-14 mt-4 mr-4 grid-cols-[24px] grid-rows-[24px_24px] gap-y-2"}
               ~ )
               button(
                 ~ aria-label="play"
-                ~ class="flex relative z-0 pt-0 pr-0 pb-0 pl-0 justify-center items-center [font-family:Gucci_Sans_Pro,_sans-serif] bg-[rgba(0,_0,_0,_0)] border-t-0 border-r-0 border-b-0 border-l-0 [border-top-style:none] [border-right-style:none] [border-bottom-style:none] [border-left-style:none] rounded-tl-[50%] rounded-tr-[50%] rounded-br-[50%] rounded-bl-[50%]"
+                ~ className={"flex relative z-0 p-0 justify-center items-center [font-family:Gucci_Sans_Pro,_sans-serif] bg-[rgba(0,_0,_0,_0)] border-t-0 border-r-0 border-b-0 border-l-0 [border-top-style:none] [border-right-style:none] [border-bottom-style:none] [border-left-style:none] rounded-[50%]"}
                 ~ )
                 svg(
                   ~ width="12"
@@ -127,82 +127,82 @@ div(class="flex w-[1312px] h-[554.672px] min-w-[auto] min-h-[auto] overflow-x-au
                   ~ fill="none"
                   ~ xmlns="http://www.w3.org/2000/svg"
                   ~ aria-hidden="true"
-                  ~ class="flex z-[1]"
+                  ~ className={"flex z-1"}
                   ~ )
                   g
                     path(
                       ~ d="M4.5 2V10H3C3.02297 9.51282 3.14541 7.42994 3.15918 6.30371V5.67676C3.14482 4.5377 3.07249 2.47453 3 2H4.5Z"
                       ~ fill="var(--_g-icon-fill-color)"
-                      ~ class="fill-[rgb(255,_255,_255)]"
+                      ~ className="fill-[rgb(255,_255,_255)]"
                       ~ )
                     path(
                       ~ d="M9 2C8.97703 2.48718 8.85459 4.57006 8.84082 5.69629V6.32324C8.85518 7.4623 8.92752 9.52547 9 10H7.5V2H9Z"
                       ~ fill="var(--_g-icon-fill-color)"
-                      ~ class="fill-[rgb(255,_255,_255)]"
+                      ~ className="fill-[rgb(255,_255,_255)]"
                       ~ )
-                  g(class="opacity-[0]")
+                  g(className="opacity-[0]")
                     path(
                       ~ d="M4 8.5V3.5C4 3.5 5.51312 4.31436 6.5 4.80329C7.46657 5.28216 9 5.97978 9 5.97978C9 5.97978 7.46649 6.68992 6.5 7.17656C5.51303 7.67351 4 8.5 4 8.5Z"
                       ~ fill="var(--_g-icon-fill-color)"
-                      ~ class="fill-[rgb(255,_255,_255)]"
+                      ~ className="fill-[rgb(255,_255,_255)]"
                       ~ )
-    div(class="flex w-[378.672px] h-[80px] mr-[16px] mb-[32px] ml-[16px] flex-col grow-[2] basis-[0%] items-center text-center")
-      h3(class="w-[153.078px] h-[24px] mt-0 mb-0 text-[16px] leading-[24px] tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap] [transform-origin:76.5391px_12px]") Personalisation
-      div(class="flex w-[117.953px] h-[24px] mt-[32px] flex-col items-center gap-y-[24px] gap-x-[24px] [transform-origin:58.9766px_12px]")
-        h2(class="w-[117.953px] h-[24px] mt-0 mb-0 text-[16px] font-medium leading-[24px] tracking-[-0.64px] [outline-width:0px] [transform-origin:58.9766px_12px]")
+    div(className={"flex w-94.668 h-20 mx-4 mb-8 flex-col grow-[2] basis-[0%] items-center text-center"})
+      h3(className={"w-38.2695 h-6 my-0 text-[16px] leading-6 tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap] [transform-origin:76.5391px_12px]"}) Personalisation
+      div(className={"flex w-29.48825 h-6 mt-8 flex-col items-center gap-6 [transform-origin:58.9766px_12px]"})
+        h2(className={"w-29.48825 h-6 my-0 text-[16px] font-medium leading-6 tracking-[-0.64px] [outline-width:0px] [transform-origin:58.9766px_12px]"})
           a(
             ~ href="https://www.gucci.com/au/en_au/nst/monogramming"
             ~ title="Explore Options"
             ~ aria-label="Explore Options"
             ~ aria-hidden="false"
-            ~ class="inline-flex w-[117.953px] h-[24px] justify-center items-center gap-y-[8px] gap-x-[8px] [transform:matrix(1,_0,_0,_1,_0,_0)] [transform-origin:58.9766px_12px]"
+            ~ className={"inline-flex w-29.48825 h-6 justify-center items-center gap-2 [transform:matrix(1,_0,_0,_1,_0,_0)] [transform-origin:58.9766px_12px]"}
             ~ )
             span(
               ~ aria-hidden="true"
-              ~ class="relative w-[117.953px] h-[24px] overflow-x-hidden overflow-y-hidden [transform-origin:58.9766px_12px]"
+              ~ className={"relative w-29.48825 h-6 overflow-x-hidden overflow-y-hidden [transform-origin:58.9766px_12px]"}
               ~ )
               | Explore Options
   section(
     ~ aria-label="Collect In Store"
-    ~ class="flex w-[410.664px] flex-col grow basis-[0%] justify-items-center gap-y-[32px] gap-x-[32px]"
+    ~ className={"flex w-102.666 flex-col grow basis-[0%] justify-items-center gap-8"}
     ~ )
     figure(
       ~ aria-hidden="false"
-      ~ class="w-[410.664px] h-[410.664px] mt-0 mr-0 mb-0 ml-0 bg-[rgb(255,_255,_255)] [transform-origin:205.332px_205.332px]"
+      ~ className={"w-102.666 h-102.666 m-0 bg-[rgb(255,_255,_255)] [transform-origin:205.332px_205.332px]"}
       ~ )
-      div(class="relative w-[410.664px] h-[410.664px] [transform-origin:205.332px_205.332px]")
+      div(className={"relative w-102.666 h-102.666 [transform-origin:205.332px_205.332px]"})
         a(
           ~ href="https://www.gucci.com/au/en_au/nst/collect-in-store"
           ~ title=""
           ~ aria-label="A Gucci Client Advisor hands a silver Gucci boutique shopping bag to a client who then leaves the Gucci store, passing Horsebit decorations."
           ~ aria-hidden="true"
-          ~ class="flex absolute right-0 bottom-0 left-0 z-[1] w-[410.664px] h-[410.664px] justify-center items-center text-[rgb(0,_0,_238)] [transform-origin:205.332px_205.332px]"
+          ~ className={"flex absolute right-0 bottom-0 left-0 z-1 w-102.666 h-102.666 justify-center items-center text-[rgb(0,_0,_238)] [transform-origin:205.332px_205.332px]"}
           ~ )
-        div(class="w-[410.664px] h-[410.664px] [transform-origin:205.332px_205.332px]")
-          div(class="relative w-[410.664px] h-[410.664px] aspect-square overflow-x-hidden overflow-y-hidden [transform-origin:205.332px_205.332px]")
+        div(className={"w-102.666 h-102.666 [transform-origin:205.332px_205.332px]"})
+          div(className={"relative w-102.666 h-102.666 aspect-square overflow-x-hidden overflow-y-hidden [transform-origin:205.332px_205.332px]"})
             video(
               ~ poster="https://media.gucci.com/cms/spctf1/55ORKKwfSKk67NYg3LUOVE/8148b18e67de306e08959c11f888bd52/FLY_IN_DESAT_1080x1080_-_frame_at_0m0s.jpg"
               ~ aria-label="The Gucci Collect In Store Service"
-              ~ class="block relative z-0 w-[410.664px] h-[410.664px] aspect-square [transform-origin:205.332px_205.332px] [scale:1] object-cover"
+              ~ className={"block relative z-0 w-102.666 h-102.666 aspect-square [transform-origin:205.332px_205.332px] [scale:1] object-cover"}
               ~ )
               source(src="https://fastly-signed-eu-west-1-prod.brightcovecdn.com/media/v1/pmp4/static/clear/2924921183001/e32e1d6c-1860-4f78-9e8b-3b88a4b8d699/407e8b46-a309-4382-9f1f-9a47f9d7f386/main.mp4?fastly_token=NmFkZmM5ZDRfMTBmMDJhZWRjMWMwNmFlOTlmNGZkNGRiYTUyMGZmNDljODViZjgxZmMwMjdmNDc3MmVkODY1YmY4NzZkYTQ3OV8vL2Zhc3RseS1zaWduZWQtZXUtd2VzdC0xLXByb2QuYnJpZ2h0Y292ZWNkbi5jb20vbWVkaWEvdjEvcG1wNC9zdGF0aWMvY2xlYXIvMjkyNDkyMTE4MzAwMS9lMzJlMWQ2Yy0xODYwLTRmNzgtOWU4Yi0zYjg4YTRiOGQ2OTkvNDA3ZThiNDYtYTMwOS00MzgyLTlmMWYtOWE0N2Y5ZDdmMzg2L21haW4ubXA0")
               track
             div(
               ~ aria-hidden="true"
-              ~ class="absolute top-[321.664px] right-0 bottom-0 left-0 z-[-1] w-[410.664px] opacity-[0] [transform-origin:205.332px_44.5px]"
+              ~ className={"absolute top-80.416 right-0 bottom-0 left-0 -z-1 w-102.666 opacity-[0] [transform-origin:205.332px_44.5px]"}
               ~ )
               p(
                 ~ aria-hidden="true"
-                ~ class="w-[410.664px] h-[57px] [transform-origin:205.332px_28.5px]"
+                ~ className={"w-102.666 h-14.25 [transform-origin:205.332px_28.5px]"}
                 ~ )
                 | A Gucci Client Advisor hands a silver Gucci boutique shopping bag to a client who then leaves the Gucci store, passing Horsebit decorations.
             div(
               ~ dir="ltr"
-              ~ class="grid absolute top-0 right-0 bottom-[338.664px] left-[370.664px] z-[1] w-[24px] h-[56px] mt-[16px] mr-[16px] grid-cols-[24px] grid-rows-[24px_24px] gap-y-[8px]"
+              ~ className={"grid absolute top-0 right-0 bottom-84.666 left-92.666 z-1 w-6 h-14 mt-4 mr-4 grid-cols-[24px] grid-rows-[24px_24px] gap-y-2"}
               ~ )
               button(
                 ~ aria-label="play"
-                ~ class="flex relative z-0 pt-0 pr-0 pb-0 pl-0 justify-center items-center [font-family:Gucci_Sans_Pro,_sans-serif] bg-[rgba(0,_0,_0,_0)] border-t-0 border-r-0 border-b-0 border-l-0 [border-top-style:none] [border-right-style:none] [border-bottom-style:none] [border-left-style:none] rounded-tl-[50%] rounded-tr-[50%] rounded-br-[50%] rounded-bl-[50%]"
+                ~ className={"flex relative z-0 p-0 justify-center items-center [font-family:Gucci_Sans_Pro,_sans-serif] bg-[rgba(0,_0,_0,_0)] border-t-0 border-r-0 border-b-0 border-l-0 [border-top-style:none] [border-right-style:none] [border-bottom-style:none] [border-left-style:none] rounded-[50%]"}
                 ~ )
                 svg(
                   ~ width="12"
@@ -211,38 +211,38 @@ div(class="flex w-[1312px] h-[554.672px] min-w-[auto] min-h-[auto] overflow-x-au
                   ~ fill="none"
                   ~ xmlns="http://www.w3.org/2000/svg"
                   ~ aria-hidden="true"
-                  ~ class="flex z-[1]"
+                  ~ className={"flex z-1"}
                   ~ )
                   g
                     path(
                       ~ d="M4.5 2V10H3C3.02297 9.51282 3.14541 7.42994 3.15918 6.30371V5.67676C3.14482 4.5377 3.07249 2.47453 3 2H4.5Z"
                       ~ fill="var(--_g-icon-fill-color)"
-                      ~ class="fill-[rgb(255,_255,_255)]"
+                      ~ className="fill-[rgb(255,_255,_255)]"
                       ~ )
                     path(
                       ~ d="M9 2C8.97703 2.48718 8.85459 4.57006 8.84082 5.69629V6.32324C8.85518 7.4623 8.92752 9.52547 9 10H7.5V2H9Z"
                       ~ fill="var(--_g-icon-fill-color)"
-                      ~ class="fill-[rgb(255,_255,_255)]"
+                      ~ className="fill-[rgb(255,_255,_255)]"
                       ~ )
-                  g(class="opacity-[0]")
+                  g(className="opacity-[0]")
                     path(
                       ~ d="M4 8.5V3.5C4 3.5 5.51312 4.31436 6.5 4.80329C7.46657 5.28216 9 5.97978 9 5.97978C9 5.97978 7.46649 6.68992 6.5 7.17656C5.51303 7.67351 4 8.5 4 8.5Z"
                       ~ fill="var(--_g-icon-fill-color)"
-                      ~ class="fill-[rgb(255,_255,_255)]"
+                      ~ className="fill-[rgb(255,_255,_255)]"
                       ~ )
-    div(class="flex w-[378.664px] h-[80.0078px] mr-[16px] mb-[32px] ml-[16px] flex-col grow-[2] basis-[0%] items-center text-center [transform-origin:189.332px_40.0039px]")
-      h3(class="w-[152.359px] h-[24px] mt-0 mb-0 text-[16px] leading-[24px] tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap] [transform-origin:76.1797px_12px]") Collect In Store
-      div(class="flex w-[100.914px] h-[24px] mt-[32px] flex-col items-center gap-y-[24px] gap-x-[24px] [transform-origin:50.457px_12px]")
-        h2(class="w-[100.914px] h-[24px] mt-0 mb-0 text-[16px] font-medium leading-[24px] tracking-[-0.64px] [outline-width:0px] [transform-origin:50.457px_12px]")
+    div(className={"flex w-94.666 h-20.00195 mx-4 mb-8 flex-col grow-[2] basis-[0%] items-center text-center [transform-origin:189.332px_40.0039px]"})
+      h3(className={"w-38.08975 h-6 my-0 text-[16px] leading-6 tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap] [transform-origin:76.1797px_12px]"}) Collect In Store
+      div(className={"flex w-25.2285 h-6 mt-8 flex-col items-center gap-6 [transform-origin:50.457px_12px]"})
+        h2(className={"w-25.2285 h-6 my-0 text-[16px] font-medium leading-6 tracking-[-0.64px] [outline-width:0px] [transform-origin:50.457px_12px]"})
           a(
             ~ href="https://www.gucci.com/au/en_au/nst/collect-in-store"
             ~ title="Discover How"
             ~ aria-label="Discover How"
             ~ aria-hidden="false"
-            ~ class="inline-flex w-[100.914px] h-[24px] justify-center items-center gap-y-[8px] gap-x-[8px] [transform:matrix(1,_0,_0,_1,_0,_0)] [transform-origin:50.457px_12px]"
+            ~ className={"inline-flex w-25.2285 h-6 justify-center items-center gap-2 [transform:matrix(1,_0,_0,_1,_0,_0)] [transform-origin:50.457px_12px]"}
             ~ )
             span(
               ~ aria-hidden="true"
-              ~ class="relative w-[100.914px] h-[24px] overflow-x-hidden overflow-y-hidden [transform-origin:50.457px_12px]"
+              ~ className={"relative w-25.2285 h-6 overflow-x-hidden overflow-y-hidden [transform-origin:50.457px_12px]"}
               ~ )
               | Discover How

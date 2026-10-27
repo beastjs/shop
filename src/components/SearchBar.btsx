@@ -1,0 +1,41 @@
+section(
+  ~ aria-label="Search products"
+  ~ className={"box-border w-full max-w-7xl mx-auto mt-2 mb-12"}
+  ~ )
+  form(
+    ~ role="search"
+    ~ className={"flex w-full min-h-36 items-center gap-6 rounded-3xl"}
+    ~ )
+    div(className={"flex flex-1 min-w-0 h-18 px-6 items-center gap-4 rounded-2xl bg-white shadow-[0_8px_28px_rgba(13,_12,_34,_0.18)] focus-within:ring-2 focus-within:ring-mac-blue"})
+      svg(
+        ~ aria-hidden="true"
+        ~ width="26"
+        ~ height="26"
+        ~ viewBox="0 0 24 24"
+        ~ fill="none"
+        ~ stroke="currentColor"
+        ~ stroke-width="1.8"
+        ~ stroke-linecap="round"
+        ~ stroke-linejoin="round"
+        ~ className={"shrink-0 text-[#777481]"}
+        ~ )
+        circle(
+          ~ cx="11"
+          ~ cy="11"
+          ~ r="7"
+          ~ )
+        path(
+          ~ d="m20 20-4-4"
+          ~ )
+      input(
+        ~ type="search"
+        ~ name="q"
+        ~ aria-label="Search products"
+        ~ placeholder="Search products, brands, and ideas"
+        ~ className={"w-full h-full p-0 text-[18px] text-[rgb(13,_12,_34)] placeholder:text-[#9997a2] bg-transparent outline-none"}
+        ~ )
+    button(
+      ~ type="submit"
+      ~ className={"flex h-18 px-10 shrink-0 justify-center items-center rounded-2xl bg-[rgb(13,_12,_34)] text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(13,_12,_34,_0.16)] transition-transform hover:-translate-y-0.5"}
+      ~ )
+      | Search

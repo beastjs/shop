@@ -1,0 +1,21 @@
+import ProductGrid from "../components/product/ProductGrid.btsx";
+import ProductFooter from "../components/product/ProductFooter.btsx";
+import { useLoaderData } from "@octanejs/tanstack-router";
+import type { CategoryProductsResult } from "../lib/product/card-types";
+
+setup
+  const { category, products } = useLoaderData({ strict: false }) as CategoryProductsResult
+  const productGridProps = { products }
+
+section(className="py-10")
+  header(className="mb-8")
+    h1(className="m-0 text-4xl font-semibold tracking-tight") #{category?.name ?? "Category not found"}
+  if category
+    if products.length > 0
+      fragment
+        ProductGrid({...productGridProps})
+        ProductFooter
+    else
+      p(className="text-base text-neutral-600") Products in this category are coming soon.
+  else
+    p(className="text-base text-neutral-600") We couldn't find that category.
