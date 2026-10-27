@@ -1,6 +1,6 @@
 
 section(className="flex relative w-full h-32 items-center justify-center")
-  h2(className={"w-33.92575 h-6 max-w-218 my-0 text-[16px] leading-6 tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap] [transform:matrix(1,_0,_0,_1,_0,_0)] [transform-origin:67.8516px_12px]"}) Gucci Services
+  h2(className={"w-33.92575 h-6 max-w-218 my-0 text-[16px] leading-6 tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap] [transform:matrix(1,_0,_0,_1,_0,_0)] [transform-origin:67.8516px_12px]"}) Our Services
 div(className={"flex w-328 h-138.668 min-w-[auto] min-h-[auto] overflow-x-auto overflow-y-hidden col-end-[span_12] gap-10 [font-family:Gucci_Sans_Pro,_sans-serif]"})
   section(
     ~ aria-label="Book an Appointment"

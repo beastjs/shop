@@ -1,23 +1,7 @@
 import {pods} from '@/lib/product/pods'
 import ProductCard from "./ProductCard.btsx";
-div(className={"font-sans w-full h-fit leading-6 [transform-origin:720.5px_1135.5px]"})
-  div(className={"hidden w-full h-12 [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(229,_231,_235)] [border-right-color:rgb(229,_231,_235)] [border-bottom-color:rgb(229,_231,_235)] [border-left-color:rgb(229,_231,_235)]"})
-    div(className={"flex w-full h-12 -ml-0.5 py-2 px-3.75 justify-between border-t-2 border-r-2 border-b-0 border-l-2 [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(211,_210,_208)] [border-right-color:rgb(211,_210,_208)] [border-bottom-color:rgb(211,_210,_208)] [border-left-color:rgb(211,_210,_208)]"})
-      button(className={"w-30.80275 p-0 text-[rgb(45,_42,_38)] [font-family:turn_nuevo] text-[18px] leading-7 bg-[rgba(0,_0,_0,_0)] border-t-0 border-r-0 border-b-0 border-l-0 [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(229,_231,_235)] [border-right-color:rgb(229,_231,_235)] [border-bottom-color:rgb(229,_231,_235)] [border-left-color:rgb(229,_231,_235)] [appearance:button]"}) filter and sort +
-      p(className={"w-5.142575 h-7 my-0 text-[18px] leading-7 [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(229,_231,_235)] [border-right-color:rgb(229,_231,_235)] [border-bottom-color:rgb(229,_231,_235)] [border-left-color:rgb(229,_231,_235)] [transform-origin:10.2852px_14px]"}) [7]
-    div(className={"hidden fixed top-0 left-0 z-110 w-364 h-225.5 bg-[rgba(0,_0,_0,_0.4)] [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(229,_231,_235)] [border-right-color:rgb(229,_231,_235)] [border-bottom-color:rgb(229,_231,_235)] [border-left-color:rgb(229,_231,_235)]"})
-    div(className={"flex fixed top-0 right-248.25 bottom-0 left-0 z-115 max-w-112 max-h-225.5 flex-col bg-[rgb(255,_255,_255)] [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(229,_231,_235)] [border-right-color:rgb(229,_231,_235)] [border-bottom-color:rgb(229,_231,_235)] [border-left-color:rgb(229,_231,_235)] [transform:matrix(1,_0,_0,_1,_-448,_0)]"})
-      div(className={"flex w-112 h-15.25 py-4 px-5 justify-between items-center border-b-1 [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(229,_231,_235)] [border-right-color:rgb(229,_231,_235)] [border-bottom-color:rgb(211,_210,_208)] [border-left-color:rgb(229,_231,_235)]"})
-        h5(className={"w-10.9961 h-7 my-0 text-[20px] leading-7 [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(229,_231,_235)] [border-right-color:rgb(229,_231,_235)] [border-bottom-color:rgb(229,_231,_235)] [border-left-color:rgb(229,_231,_235)]"}) filter
-        button(className={"h-4 p-0 text-[rgb(45,_42,_38)] [font-family:turn_nuevo] text-[20px] leading-7.5 bg-[rgba(0,_0,_0,_0)] border-t-0 border-r-0 border-b-0 border-l-0 [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(229,_231,_235)] [border-right-color:rgb(229,_231,_235)] [border-bottom-color:rgb(229,_231,_235)] [border-left-color:rgb(229,_231,_235)] rounded-lg [transform-origin:8px_8px] [appearance:button]"})
-          img(
-            ~ alt="close icon"
-            ~ width="16"
-            ~ height="16"
-            ~ src="https://podpak.me/_next/static/media/close-icon.0x9nn1eh5zvls.svg"
-            ~ className="block max-w-full text-[rgba(0,_0,_0,_0)] align-middle [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(229,_231,_235)] [border-right-color:rgb(229,_231,_235)] [border-bottom-color:rgb(229,_231,_235)] [border-left-color:rgb(229,_231,_235)]"
-            ~ )
+div(className={"font-sans w-full h-fit leading-6"})
   div(className={"grid w-full h-full justify-center space-4 md:grid-cols-3"})
     each pod in pods key pod.id
       ProductCard({...pod})
-  div(className={"w-355.25 mb-32 [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgb(229,_231,_235)] [border-right-color:rgb(229,_231,_235)] [border-bottom-color:rgb(229,_231,_235)] [border-left-color:rgb(229,_231,_235)] [transform-origin:710.5px_0px]"})
+  div(className={"w-full mb-32"})

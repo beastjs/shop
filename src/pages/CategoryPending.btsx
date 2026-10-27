@@ -1,0 +1,13 @@
+props {}:{}
+
+section(className="py-10" aria-busy="true" aria-label="Loading products")
+  header(className="my-16 px-4 gap-10 flex items-center justify-between")
+    div(className="h-16 w-48 rounded-md bg-neutral-200/70 animate-pulse")
+    div(className="h-18 flex-1 max-w-7xl rounded-2xl bg-neutral-200/70 animate-pulse")
+  div(className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3")
+    each slot in [0, 1, 2, 3, 4, 5] key slot
+      div(className="p-4")
+        div(className="w-full aspect-square rounded-sm bg-neutral-200/70 animate-pulse")
+        div(className="mt-3 flex items-center justify-between px-3")
+          div(className="h-6 w-1/2 rounded bg-neutral-200/70 animate-pulse")
+          div(className="h-6 w-16 rounded bg-neutral-200/70 animate-pulse")

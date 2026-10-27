@@ -1,12 +1,43 @@
 import { ClassValue } from "octane";
+import { useEffect, useRef } from "octane";
 import { cn } from "@/lib/utils";
 
 module
+  const shortcutKey = "/";
+
   interface SearchBarProps {
     className?: ClassValue
     placeholder?: string
+    onSearch?: (query: string) => void
   }
-props {className, placeholder}: SearchBarProps
+
+  const isTypingTarget = (target: EventTarget | null) =>
+    target instanceof HTMLElement &&
+    (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName))
+props {className, placeholder, onSearch}: SearchBarProps
+setup
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // Focus the search input on "/" unless the user is already typing somewhere.
+  useEffect(() => {
+    const focusInput = (event: KeyboardEvent) => {
+      if (event.key !== shortcutKey || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isTypingTarget(event.target)) return;
+      event.preventDefault();
+      inputRef.current?.focus();
+    };
+    window.addEventListener("keydown", focusInput);
+    return () => window.removeEventListener("keydown", focusInput);
+  });
+
+  const handleInput = (event: Event) => onSearch?.((event.currentTarget as HTMLInputElement).value);
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Escape") inputRef.current?.blur();
+  };
+  const handleSubmit = (event: SubmitEvent) => {
+    event.preventDefault();
+    onSearch?.(inputRef.current?.value ?? "");
+  };
 section(
   ~ aria-label="Search products"
   ~ className={cn("w-full max-w-7xl mx-auto", className)}
@@ -14,8 +45,9 @@ section(
   form(
     ~ role="search"
     ~ className={"flex w-full min-h-36 items-center gap-6 rounded-3xl"}
+    ~ onSubmit={handleSubmit}
     ~ )
-    div(className={"relative flex flex-1 min-w-0 h-18 ps-6 items-center gap-4 rounded-2xl bg-white shadow-[0_4px_12px_rgba(13,_12,_34,_0.18)] focus-within:ring-2 focus-within:ring-mac-blue"})
+    div(className={"relative flex flex-1 min-w-0 h-18 px-6 items-center gap-4 rounded-2xl bg-white shadow-[0_4px_12px_rgba(13,_12,_34,_0.18)] focus-within:ring-2 focus-within:ring-mac-blue"})
       svg(
         ~ aria-hidden="true"
         ~ width="26"
@@ -37,14 +69,20 @@ section(
           ~ d="m20 20-4-4"
           ~ )
       input(
+        ~ ref={inputRef}
         ~ type="search"
         ~ name="q"
+        ~ autocomplete="off"
         ~ aria-label="Search products"
-        ~ placeholder={placeholder ?? "Search products, brands, and ideas"}
-        ~ className={"w-full h-full p-0 text-[18px] text-[rgb(13,_12,_34)] placeholder:text-[#9997a2] bg-transparent outline-none"}
+        ~ aria-keyshortcuts={shortcutKey}
+        ~ placeholder={placeholder ?? "Search by name or price (e.g. tee <30)"}
+        ~ onInput={handleInput}
+        ~ onKeyDown={handleKeyDown}
+        ~ className={"peer w-full h-full p-0 text-[18px] text-[rgb(13,_12,_34)] placeholder:text-[#9997a2] bg-transparent outline-none"}
         ~ )
+      kbd(aria-hidden="true" className={"shrink-0 px-2.75 py-0.5 rounded-md border-2 border-border/40 text-base font-sans font-[450] text-border/60 peer-focus:hidden"}) #{shortcutKey}
       button(
         ~ type="submit"
-        ~ className={"flex h-18 px-10 shrink-0 justify-center items-center rounded-2xl bg-[rgb(13,_12,_34)] text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(13,_12,_34,_0.16)] transition-transform hover:-translate-y-0.5"}
+        ~ className={"hidden _flex h-18 px-10 shrink-0 justify-center items-center rounded-2xl bg-[rgb(13,_12,_34)] text-[16px] font-semibold text-white shadow-[0_10px_24px_rgba(13,_12,_34,_0.16)] transition-transform hover:-translate-y-0.5"}
         ~ )
         | Search

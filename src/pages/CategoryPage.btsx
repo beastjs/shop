@@ -3,20 +3,36 @@ import ProductFooter from "../components/product/ProductFooter.btsx";
 import { useLoaderData } from "@octanejs/tanstack-router";
 import type { CategoryProductsResult } from "../lib/product/card-types";
 import SearchBar from "../components/SearchBar.btsx";
+import { useEffect, useMemo, useState } from "octane";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
+import { filterProducts } from "../lib/product/search";
 
 setup
   const { category, products } = useLoaderData({ strict: false }) as CategoryProductsResult
-  const productGridProps = { products }
+  const [query, setQuery] = useState("")
+
+  // Smooth window scrolling while this page is mounted; skipped for reduced-motion users.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const lenis = new Lenis({ autoRaf: true, lerp: 0.08, anchors: true })
+    return () => lenis.destroy()
+  })
+  const filteredProducts = useMemo(() => filterProducts(products, query))
+  const productGridProps = { products: filteredProducts }
 
 section(className="py-10")
-  header(className="mb-8 gap-10 flex items-center justify-between")
+  header(className="my-8 px-4 gap-10 flex items-center justify-between")
     h1(className="m-0 text-4xl font-semibold tracking-tight") #{category?.name ?? "Category not found"}
-    SearchBar(placeholder={`Search ${category?.slug}`})
+    SearchBar(placeholder={`Search ${category?.slug} by name or price`} onSearch={setQuery})
   if category
     if products.length > 0
-      fragment
-        ProductGrid({...productGridProps})
-        ProductFooter
+      if filteredProducts.length > 0
+        fragment
+          ProductGrid({...productGridProps})
+          ProductFooter
+      else
+        p(className="px-4 text-base text-neutral-600") No products match “#{query}”.
     else
       p(className="text-base text-neutral-600") Products in this category are coming soon.
   else
