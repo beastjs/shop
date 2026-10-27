@@ -4,7 +4,7 @@ section(className="flex relative w-full h-32 items-center justify-center")
 div(className={"flex w-328 h-138.668 min-w-[auto] min-h-[auto] overflow-x-auto overflow-y-hidden col-end-[span_12] gap-10 [font-family:Gucci_Sans_Pro,_sans-serif]"})
   section(
     ~ aria-label="Book an Appointment"
-    ~ className={"flex w-102.666 flex-col grow basis-[0%] justify-items-center gap-8 [transform-origin:205.332px_277.336px]"}
+    ~ className={"hidden md:flex w-102.666 flex-col grow basis-[0%] justify-items-center gap-8 [transform-origin:205.332px_277.336px]"}
     ~ )
     figure(
       ~ aria-hidden="false"
@@ -18,8 +18,8 @@ div(className={"flex w-328 h-138.668 min-w-[auto] min-h-[auto] overflow-x-auto o
           ~ aria-hidden="true"
           ~ className={"flex absolute right-0 bottom-0 left-0 z-1 w-102.666 h-102.666 justify-center items-center text-[rgb(0,_0,_238)] [transform-origin:205.332px_205.332px]"}
           ~ )
-        div(className={"w-102.666 h-102.666 [transform-origin:205.332px_205.332px]"})
-          div(className={"relative w-102.666 h-102.666 aspect-square overflow-x-hidden overflow-y-hidden [transform-origin:205.332px_205.332px]"})
+        div(className={"md:size-102 [transform-origin:205.332px_205.332px]"})
+          div(className={"relative md:size-102 aspect-square overflow-x-hidden overflow-y-hidden [transform-origin:205.332px_205.332px]"})
             video(
               ~ poster="https://media.gucci.com/cms/spctf1/3X5xukLNi7MkoyxitZ9drX/fb57b64c3bb17a2bd95e73442d1d0caa/DAYLIGHT_DESAT_PENTAGON_1080x1080_-_frame_at_0m0s.jpg"
               ~ aria-label="Book an Appointment"
@@ -146,7 +146,7 @@ div(className={"flex w-328 h-138.668 min-w-[auto] min-h-[auto] overflow-x-auto o
                       ~ fill="var(--_g-icon-fill-color)"
                       ~ className="fill-[rgb(255,_255,_255)]"
                       ~ )
-    div(className={"flex w-94.668 h-20 mx-4 mb-8 flex-col grow-[2] basis-[0%] items-center text-center"})
+    div(className={"hidden md:flex w-94.668 h-20 mx-4 mb-8 flex-col grow-[2] basis-[0%] items-center text-center"})
       h3(className={"w-38.2695 h-6 my-0 text-[16px] leading-6 tracking-[-0.48px] uppercase [white-space-collapse:break-spaces] [text-wrap-mode:wrap] [transform-origin:76.5391px_12px]"}) Personalisation
       div(className={"flex w-29.48825 h-6 mt-8 flex-col items-center gap-6 [transform-origin:58.9766px_12px]"})
         h2(className={"w-29.48825 h-6 my-0 text-[16px] font-medium leading-6 tracking-[-0.64px] [outline-width:0px] [transform-origin:58.9766px_12px]"})
@@ -164,7 +164,7 @@ div(className={"flex w-328 h-138.668 min-w-[auto] min-h-[auto] overflow-x-auto o
               | Explore Options
   section(
     ~ aria-label="Collect In Store"
-    ~ className={"flex w-102.666 flex-col grow basis-[0%] justify-items-center gap-8"}
+    ~ className={"hidden md:flex w-102.666 flex-col grow basis-[0%] justify-items-center gap-8"}
     ~ )
     figure(
       ~ aria-hidden="false"

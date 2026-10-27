@@ -35,9 +35,9 @@ div(key={id} className='px-4 py-5 group/product rounded-sm border border-transpa
             ~ fetchPriority='high'
             ~ )
     div(className={"h-24 pb-2 "})
-      div(className={"flex items-center justify-between group-hover/product:text-background px-2 w-full h-12 mb-1.5 border-b-3 border-border/20"})
-        h5(className={"h-8 font-[300] text-lg leading-8"}) #{name}
-        p(className={"font-[400] text-xl leading-6"}) $#{price.basePrice}
+      div(className={"flex items-center justify-between group-hover/product:text-background px-0 md:px-2 w-full h-12 mb-1.5 border-b-3 border-border/20"})
+        h5(className={"h-8 font-[300] text-sm sm:text-base md:text-lg leading-8 truncate"}) #{name}
+        p(className={"font-[400] text-lg md:text-xl leading-6"}) $#{price.basePrice}
       div(className={"relative flex items-center justify-between w-full h-6"})
         RunnerButton(className='absolute z-10 top-1 w-full' label='add to cart' paint={'var(--mac-blue)'} onClick={addToCart})
         div(className={"absolute z-0 flex items-center justify-between w-full"})

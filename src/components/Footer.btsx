@@ -1,4 +1,4 @@
-div(className={"w-full bg-foreground h-25.5 p-26 text-[rgb(255,_255,_255)]"})
+div(className={"w-full bg-foreground h-25.5 px-10 py-28 md:p-28 text-[rgb(255,_255,_255)]"})
   div(className={"flex w-85.75 h-12.5 max-w-85.75 items-center gap-8"})
     div(className={"w-16 h-6.64845 max-w-16 grow basis-[0%]"})
       a(
