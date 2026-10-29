@@ -22,7 +22,7 @@ div(className={"flex box-border w-full h-140 max-w-7xl m-auto pt-10 pb-15 justif
         span(className={"text-[13px] font-medium text-[#777481]"})
           | No code needed
 
-  aside(className={"flex relative w-153.5 h-107.5 max-w-153.5"})
+  aside(className={"hidden md:flex relative w-153.5 h-107.5 max-w-153.5"})
     button(
       ~ type="button"
       ~ aria-label="Pause media"
