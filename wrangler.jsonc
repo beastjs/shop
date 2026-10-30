@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "shop",
+  "main": "./src/worker.ts",
+  "compatibility_date": "2026-10-30",
+  "workers_dev": true,
+  "account_id": "3e5e21a8e670deeba6401b80e003df01",
+  "assets": {
+    "directory": "./dist/",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  }
+}

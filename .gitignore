@@ -5,5 +5,7 @@ dist/
 .env
 .env.*
 !.env.example
+.dev.vars
+.dev.vars.*
 .DS_Store
 sa.json

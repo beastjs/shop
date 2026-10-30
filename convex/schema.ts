@@ -34,6 +34,47 @@ const attributeDisplayType = v.union(
   v.literal("color"),
 );
 
+const accountStatus = v.union(
+  v.literal("pending"),
+  v.literal("confirmed"),
+  v.literal("active"),
+  v.literal("suspended"),
+  v.literal("closed"),
+);
+
+const accountPlan = v.union(
+  v.literal("trial"),
+  v.literal("starter"),
+  v.literal("pro"),
+  v.literal("enterprise"),
+);
+
+const accountAddress = v.object({
+  line1: v.optional(v.string()),
+  line2: v.optional(v.string()),
+  city: v.optional(v.string()),
+  region: v.optional(v.string()),
+  postalCode: v.optional(v.string()),
+  country: v.optional(v.string()),
+});
+
+const accountOrganization = v.object({
+  legalName: v.optional(v.string()),
+  website: v.optional(v.string()),
+  industry: v.optional(v.string()),
+  size: v.optional(v.string()),
+  taxId: v.optional(v.string()),
+  address: v.optional(accountAddress),
+});
+
+const accountPrimaryContact = v.object({
+  name: v.string(),
+  email: v.string(),
+  phone: v.union(v.string(), v.null()),
+  title: v.union(v.string(), v.null()),
+  tokenIdentifier: v.union(v.string(), v.null()),
+});
+
 export default defineSchema({
   // Guest carts keyed by an anonymous client-generated UUID. Lines are bounded (MAX_CART_LINES in carts.ts).
   carts: defineTable({
@@ -48,6 +89,94 @@ export default defineSchema({
     revision: v.number(),
     updatedAt: v.number(),
   }).index("by_cartKey", ["cartKey"]),
+
+  accounts: defineTable({
+    slug: v.string(),
+    name: v.string(),
+    status: accountStatus,
+    plan: accountPlan,
+    organization: accountOrganization,
+    primaryContact: accountPrimaryContact,
+    billingEmail: v.union(v.string(), v.null()),
+    logoR2Key: v.optional(v.string()),
+    ownerTokenIdentifier: v.string(),
+    notes: v.union(v.string(), v.null()),
+    closedAt: v.union(v.number(), v.null()),
+    closedBy: v.union(v.string(), v.null()),
+    closeReason: v.union(v.string(), v.null()),
+    createdAt: v.number(),
+    createdBy: v.string(),
+    updatedAt: v.number(),
+    verificationRecipientEmails: v.optional(v.array(v.string())),
+    updatedBy: v.string(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_createdAt", ["createdAt"])
+    .index("by_status_and_createdAt", ["status", "createdAt"])
+    .index("by_ownerTokenIdentifier_and_createdAt", ["ownerTokenIdentifier", "createdAt"])
+    .index("by_primaryContact_tokenIdentifier", ["primaryContact.tokenIdentifier"])
+    .index("by_primaryContact_email", ["primaryContact.email"]),
+
+  accountSlugReservations: defineTable({
+    slug: v.string(),
+    accountId: v.id("accounts"),
+  }).index("by_slug", ["slug"]),
+
+  accountMembers: defineTable({
+    accountId: v.id("accounts"),
+    email: v.string(),
+    tokenIdentifier: v.union(v.string(), v.null()),
+    userId: v.union(v.id("users"), v.null()),
+    name: v.union(v.string(), v.null()),
+    title: v.union(v.string(), v.null()),
+    role: v.union(v.literal("viewer"), v.literal("member"), v.literal("admin"), v.literal("owner")),
+    status: v.union(v.literal("invited"), v.literal("active"), v.literal("suspended")),
+    adminConfirmation: v.optional(
+      v.union(
+        v.literal("pending"),
+        v.literal("confirmed"),
+        v.literal("complete"),
+        v.literal("cancelled"),
+        v.literal("revoking"),
+        v.literal("revoked"),
+      ),
+    ),
+    invitedAt: v.number(),
+    invitedBy: v.string(),
+    joinedAt: v.union(v.number(), v.null()),
+    updatedAt: v.number(),
+    verificationRecipientEmails: v.optional(v.array(v.string())),
+    updatedBy: v.string(),
+  })
+    .index("by_accountId_and_status", ["accountId", "status"])
+    .index("by_accountId_and_role", ["accountId", "role"])
+    .index("by_accountId_and_email", ["accountId", "email"])
+    .index("by_accountId_and_tokenIdentifier", ["accountId", "tokenIdentifier"])
+    .index("by_tokenIdentifier_and_status", ["tokenIdentifier", "status"])
+    .index("by_email_and_status", ["email", "status"]),
+
+  users: defineTable({
+    tokenIdentifier: v.string(),
+    firebaseUid: v.string(),
+    name: v.optional(v.string()),
+    email: v.optional(v.string()),
+    imageUrl: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+    subject: v.string(),
+    issuer: v.string(),
+    nickname: v.union(v.string(), v.null()),
+    preferredUsername: v.union(v.string(), v.null()),
+    profileUrl: v.optional(v.string()),
+    phone: v.union(v.string(), v.null()),
+    emailVerified: v.union(v.boolean(), v.null()),
+    avatarR2Key: v.optional(v.string()),
+    avatarSourceUrl: v.optional(v.string()),
+    avatarSyncRequestedAt: v.optional(v.number()),
+  })
+    .index("by_tokenIdentifier", ["tokenIdentifier"])
+    .index("by_firebaseUid", ["firebaseUid"])
+    .index("by_email", ["email"]),
 
   categories: defineTable({
     externalId: v.string(),

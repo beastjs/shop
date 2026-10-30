@@ -15,8 +15,8 @@ button#cart-button(
   ~ onMouseEnter={handleMouseOver(true)}
   ~ onMouseLeave={handleMouseOver(false)}
   ~ onClick={cartActions.toggle}
-  ~ className="group relative flex items-center justify-center size-10 rounded-xl hover:text-[#fff] hover:bg-mac-blue/5 transition-colors"
+  ~ className="group relative flex size-10 shrink-0 items-center justify-center rounded-xl transition-colors hover:bg-mac-blue/5 hover:text-[#fff]"
   ~ )
-  Icon(name={isHovered ? 'bag-fill':'bag'} size={26} className={isHovered ? 'text-mac-blue' : 'text-foreground/90'})
+  Icon(name={isHovered ? 'bag-fill':'bag'} size={26} className={isHovered ? 'text-mac-blue' : 'text-foreground/50'})
   if count > 0
-    span(aria-hidden="true" className="absolute bottom-2.25 right-2.75 min-h-4.5 min-w-4.5 aspect-square flex items-center justify-center rounded-lg font-ark font-bold text-foreground/80 group-hover:text-[#fff] text-[12px] leading-none tracking-wide") #{count > 99 ? "99+" : count}
+    span(aria-hidden="true" className="absolute bottom-2.25 right-2.75 min-h-4.5 min-w-4.5 aspect-square flex items-center justify-center rounded-lg font-ark font-bold text-foreground/80 group-hover:text-[#fff] text-[12.5px] leading-none tracking-wide") #{count > 99 ? "99+" : count}

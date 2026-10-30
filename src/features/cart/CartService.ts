@@ -26,6 +26,17 @@ export interface CartServiceOptions {
 
 const decodeCartId = Schema.decodeUnknownSync(CartId)
 
+const createCartUuid = () => {
+  if (typeof crypto.randomUUID === "function") return crypto.randomUUID()
+
+  // randomUUID is unavailable on HTTP LAN origins; getRandomValues also works there.
+  const bytes = crypto.getRandomValues(new Uint8Array(16))
+  bytes[6] = (bytes[6] & 0x0f) | 0x40
+  bytes[8] = (bytes[8] & 0x3f) | 0x80
+  const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("")
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`
+}
+
 /**
  * Orchestrates the cart: local edits apply instantly and persist, then sync to the
  * remote in the background. The remote is authoritative for prices and stock.
@@ -46,7 +57,7 @@ export class CartService extends Context.Service<CartService, {
         const remote = yield* CartRemote
         const checkoutGateway = yield* CheckoutGateway
         const debounce = options.debounce ?? 400
-        const newCartId = options.newCartId ?? (() => decodeCartId(crypto.randomUUID()))
+        const newCartId = options.newCartId ?? (() => decodeCartId(createCartUuid()))
 
         const stored = yield* storage.load.pipe(Effect.orElseSucceed(() => Option.none<Cart>()))
         const initial = Option.getOrElse(stored, () => emptyCart(newCartId()))

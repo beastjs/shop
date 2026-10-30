@@ -6,6 +6,7 @@ import App from './App.btsx'
 import CategoryPage from './pages/CategoryPage.btsx'
 import CategoryPending from './pages/CategoryPending.btsx'
 import HomePage from './pages/HomePage.btsx'
+import { createConsoleFallbackRoutes, selectConsoleRouteTree } from './lib/consoles/route-trees'
 import './style.css'
 
 const container = document.getElementById('app')
@@ -15,23 +16,31 @@ function loadProducts(categorySlug: string) {
   return convex.query(api.products.listByCategory, { categorySlug })
 }
 
-const rootRoute = createRootRoute({ component: App })
-const homeRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/',
-  component: HomePage,
-})
+function createStorefrontRouteTree() {
+  const rootRoute = createRootRoute({ component: App })
+  const homeRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/',
+    component: HomePage,
+  })
 
-const categoryRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/$slug",
-  loader: ({ params }) => loadProducts(params.slug),
-  component: CategoryPage,
-  pendingComponent: CategoryPending,
-})
+  const categoryRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/$slug',
+    loader: ({ params }) => loadProducts(params.slug),
+    component: CategoryPage,
+    pendingComponent: CategoryPending,
+  })
+
+  return rootRoute.addChildren([
+    homeRoute,
+    categoryRoute,
+    ...createConsoleFallbackRoutes(rootRoute),
+  ])
+}
 
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, categoryRoute]),
+  routeTree: selectConsoleRouteTree() ?? createStorefrontRouteTree(),
   // Start loading a category on hover/focus so the round trip is mostly done by click time.
   defaultPreload: 'intent',
   // Reuse loaded categories for a minute instead of refetching on every visit.

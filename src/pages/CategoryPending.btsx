@@ -1,9 +1,9 @@
 props {}:{}
 
-section(className="py-10" aria-busy="true" aria-label="Loading products")
-  header(className="my-16 px-4 gap-10 flex items-center justify-between")
-    div(className="h-16 w-48 rounded-md bg-neutral-200/70 animate-pulse")
-    div(className="h-18 flex-1 max-w-7xl rounded-2xl bg-neutral-200/70 animate-pulse")
+section(className="w-full py-6 sm:py-10" aria-busy="true" aria-label="Loading products")
+  header(className="my-4 flex flex-col items-stretch gap-4 px-4 sm:my-8 sm:flex-row sm:items-center sm:gap-8")
+    div(className="h-10 w-40 rounded-md bg-neutral-200/70 animate-pulse sm:h-16 sm:w-48")
+    div(className="h-14 w-full rounded-2xl bg-neutral-200/70 animate-pulse sm:h-18 sm:flex-1 sm:max-w-7xl")
   div(className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3")
     each slot in [0, 1, 2, 3, 4, 5] key slot
       div(className="p-4")

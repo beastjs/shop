@@ -1,25 +1,25 @@
-div(className={"flex box-border w-full h-140 max-w-7xl m-auto pt-10 pb-15 justify-between items-center gap-4 text-[rgb(13,_12,_34)] leading-7"})
-  div#left-hero(className={"flex box-border w-1/2 h-107.5 p-10 flex-col justify-center rounded-3xl bg-linear-to-b from-[#f4f1eb] to-teal-200/20 text-[rgb(13,_12,_34)]"})
-    div(className={"flex w-fit h-9 mb-6 px-4 items-center gap-2 rounded-full bg-white text-[11px] font-bold tracking-[0.12em] uppercase shadow-sm"})
+div(className={"mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 pb-8 pt-5 mt-16 text-[rgb(13,_12,_34)] leading-7 sm:px-6 md:h-140 md:flex-row md:items-center md:justify-between md:gap-4 md:px-8 md:pb-15 md:pt-10"})
+  div#left-hero(className={"flex min-w-0 w-full flex-col justify-center rounded-3xl bg-linear-to-b from-[#f4f1eb] to-teal-200/20 p-6 text-[rgb(13,_12,_34)] sm:p-8 md:h-107.5 md:w-1/2 md:p-10"})
+    div(className={"mb-5 flex min-h-9 w-fit max-w-full items-center gap-2 rounded-full bg-white px-3 text-[10px] font-bold tracking-[0.1em] uppercase shadow-sm sm:text-[11px] md:mb-6 md:px-4"})
       span(className={"w-2 h-2 rounded-full bg-mac-blue"})
       | THE INDEPENDENT SHOP BUILDER
-    section(className={"font-sans flex flex-col items-start gap-6"})
+    section(className={"flex flex-col items-start gap-5 font-sans md:gap-6"})
       h1(
         ~ aria-label="Work with the world’s best in design"
-        ~ className={"max-w-140 my-0 text-[54px] font-semibold tracking-[-0.045em] leading-[1.08] [font-feature-settings:normal] text-left"}
+        ~ className={"my-0 max-w-[15ch] text-4xl font-semibold tracking-[-0.045em] leading-[1.08] text-left sm:text-5xl md:max-w-140"}
         ~ )
         | Make your next big idea
-        br
+        br(className="hidden md:block")
         | a beautiful online shop.
-      p(className={"max-w-105 my-0 text-[17px] leading-7 text-[#555360]"})
+      p(className={"my-0 max-w-105 text-[15px] leading-6 text-[#555360] sm:text-base md:text-[17px] md:leading-7"})
         | Everything you need to bring your products to the world, with a storefront that feels unmistakably yours.
-      div(className={"flex min-h-13 flex-wrap items-center gap-4"})
+      div(className={"flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4"})
         a(
           ~ href="#"
-          ~ className={"flex box-border relative min-w-50 h-13 px-6 justify-center items-center gap-2 text-white text-[14px] font-bold bg-[rgb(13,_12,_34)] rounded-full shadow-[0_10px_24px_rgba(13,_12,_34,_0.16)] transition-transform hover:-translate-y-0.5"}
+          ~ className={"relative flex min-h-12 w-full box-border items-center justify-center gap-2 rounded-full bg-[rgb(13,_12,_34)] px-5 text-[14px] font-bold text-white shadow-[0_10px_24px_rgba(13,_12,_34,_0.16)] transition-transform hover:-translate-y-0.5 sm:w-fit sm:min-w-50 sm:px-6 md:h-13"}
           ~ )
           | ✦ Build your online shop
-        span(className={"text-[13px] font-medium text-[#777481]"})
+        span(className={"text-center text-[13px] font-medium text-[#777481] sm:text-left"})
           | No code needed
 
   aside(className={"hidden md:flex relative w-153.5 h-107.5 max-w-153.5"})

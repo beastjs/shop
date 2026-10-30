@@ -1,0 +1,117 @@
+import {useConvexAuth} from '@/hooks/use-convex'
+import { useConvexQuery } from '@/hooks/use-convex-query'
+import { useCurrentUserAvatar } from '@/hooks/use-current-user-avatar'
+import { api } from '../../convex/_generated/api'
+import { canUseAccount } from '@/lib/account'
+import { Icon, type IconName } from '@/lib/icons'
+// import { resolveAccountProfileImageUrl } from '@/lib/r2/prefixes'
+import { buildAdminHandoffUrl } from '@/lib/routing/admin-subdomain'
+import { buildAsgardNavigationUrl } from '@/lib/routing/asgard-navigation'
+import { cn, getInitials } from '@/lib/utils'
+import type { User } from 'firebase/auth'
+import { useEffect, useRef, useState } from 'octane'
+import { Link } from '@octanejs/tanstack-router'
+import Avatar from '@/ui/Avatar.btsx'
+import SignOut from '@/components/Signout.btsx'
+
+module
+  export interface UserMenuProps {
+    user: User | null
+    hasAdminClaim: boolean
+    hasGodAccess: boolean
+  }
+
+  interface ItemProps {
+    label: string
+    icon: IconName
+    onClick: () => void | Promise<void>
+    disabled?: boolean
+  }
+
+  interface RouteItemProps {
+    to: '/admin' | '/asgard'
+    label: string
+    icon: IconName
+  }
+
+component RouteItem
+  props { icon, label, onNavigate, to }: RouteItemProps & { onNavigate: () => void }
+  Link(to={to} role='menuitem' onClick={onNavigate} className='group/dropdown-menu-item relative flex w-full text-foreground/75 first:rounded-t-xl hover:text-foreground cursor-pointer items-center gap-3 rounded-lg px-3 py-4 text-left text-sm outline-hidden select-none hover:bg-sidebar focus:bg-accent focus:text-accent-foreground')
+    Icon(name={icon} className='size-5')
+    span(className='text-base font-medium tracking-tight') #{label}
+
+component Item
+  props { icon,label, onClick, disabled=false }: ItemProps
+  button(role='menuitem' disabled={disabled} className='group/dropdown-menu-item relative flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-4 text-left text-sm outline-hidden select-none hover:bg-accent focus:bg-accent focus:text-accent-foreground' onClick={onClick})
+    Icon(name={icon} className='size-4.5')
+    span(className='font-medium text-base tracking-tight') #{label}
+
+props { user, hasAdminClaim, hasGodAccess }: UserMenuProps
+
+setup
+  const convexAuth = useConvexAuth()
+  const accounts = useConvexQuery(api.accounts.q.listMine, convexAuth.isAuthenticated ? { limit: 250 } : 'skip', convexAuth.userId ?? '')
+  const hasWorkspace = accounts?.some(account => canUseAccount(account.status)) ?? false
+  const [isNavigatingToAdmin, setIsNavigatingToAdmin] = useState(false)
+  const [isNavigatingToAsgard, setIsNavigatingToAsgard] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement | null>(null)
+  const avatar = useCurrentUserAvatar(user?.photoURL ?? null)
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    const closeOnOutsideClick = (event: MouseEvent) => {
+      const target = event.target
+      if (target instanceof Node && !menuRef.current?.contains(target)) {
+        setIsOpen(false)
+      }
+    }
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false)
+    }
+
+    document.addEventListener('mousedown', closeOnOutsideClick)
+    document.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.removeEventListener('mousedown', closeOnOutsideClick)
+      document.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [isOpen])
+  const handleAdminNavigation = async () => {
+    if (!user || isNavigatingToAdmin) return
+    setIsOpen(false)
+    setIsNavigatingToAdmin(true)
+    try {
+      const idToken = await user.getIdToken(true)
+      window.location.assign(buildAdminHandoffUrl(new URL(window.location.href), idToken).toString())
+    } catch (error) {
+      console.error('Failed to navigate to the admin app.', error)
+      setIsNavigatingToAdmin(false)
+    }
+  }
+  const handleAsgardNavigation = () => {
+    if (!user || isNavigatingToAsgard) return
+    setIsOpen(false)
+    setIsNavigatingToAsgard(true)
+    try {
+      window.location.assign(buildAsgardNavigationUrl(new URL(window.location.href)).toString())
+    } catch (error) {
+      console.error('Failed to navigate to the Asgard app.', error)
+      setIsNavigatingToAsgard(false)
+    }
+  }
+
+div(ref={menuRef} className='relative z-100!')
+  button(type='button' aria-haspopup='menu' aria-expanded={isOpen} onClick={() => setIsOpen((open) => !open)} className='cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring' aria-label='Open user menu')
+    div(className='flex aspect-square size-9 items-center justify-center rounded-full bg-beach/10 backdrop-blur-3xl transition hover:bg-beach/80 dark:bg-lime-200/10 dark:hover:bg-lime-200/80 md:size-12')
+      Avatar(imageUrl={avatar.src} fallbackImageUrl={avatar.fallbackSrc} alt={user?.displayName ?? 'User'} fallback={getInitials(user?.displayName)} size='default' className='size-9 border-0 shadow-none md:size-7')
+  if isOpen
+    div(role='menu' className='absolute right-0 top-full z-50 mt-2 max-h-[calc(100vh-5rem)] min-w-48 overflow-x-hidden overflow-y-auto rounded-2xl bg-popover p-1 text-popover-foreground shadow-2xl ring-1 ring-input')
+      RouteItem(to='/admin' label='account' icon='user' onNavigate={() => setIsOpen(false)})
+      if hasWorkspace
+        Item(label='workspace' icon='admin' onClick={handleAdminNavigation} disabled={isNavigatingToAdmin})
+      if hasGodAccess
+        Item(label='asgard' icon='asgard' onClick={handleAsgardNavigation} disabled={isNavigatingToAsgard})
+      div(className='-mx-1 my-1 h-px bg-input' role='separator')
+      SignOut(withLabel={true} className='flex h-12 w-full items-center justify-center rounded-b-xl rounded-t-xs transition-colors hover:bg-white/6 disabled:cursor-wait disabled:opacity-60')
