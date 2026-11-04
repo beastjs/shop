@@ -264,6 +264,112 @@
   opacity: 0.75;
 }
 
+.asgard-session-state,
+.asgard-account-state {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--color-border, rgb(0 0 0 / 0.1));
+  border-radius: 0.625rem;
+  color: var(--color-foreground, #111);
+  font-size: 0.875rem;
+}
+
+.asgard-session-state a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.asgard-account-panel {
+  overflow: hidden;
+  border: 1px solid var(--color-border, rgb(0 0 0 / 0.1));
+  border-radius: 0.625rem;
+}
+
+.asgard-account-panel-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--color-border, rgb(0 0 0 / 0.1));
+}
+
+.asgard-account-panel-heading h2,
+.asgard-account-panel-heading p {
+  margin: 0;
+}
+
+.asgard-account-panel-heading h2 {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.asgard-account-panel-heading p {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.asgard-account-table-wrap {
+  overflow-x: auto;
+}
+
+.asgard-account-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  text-align: left;
+}
+
+.asgard-account-table th,
+.asgard-account-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border, rgb(0 0 0 / 0.08));
+  vertical-align: middle;
+}
+
+.asgard-account-table th {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.asgard-account-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.asgard-account-table td:first-child strong,
+.asgard-account-table td:first-child span,
+.asgard-account-table td:nth-child(4) span {
+  display: block;
+}
+
+.asgard-account-slug,
+.asgard-account-email,
+.asgard-account-date,
+.asgard-account-plan {
+  font-size: 0.75rem;
+  opacity: 0.65;
+}
+
+.asgard-account-status {
+  display: inline-flex;
+  border: 1px solid var(--color-border, rgb(0 0 0 / 0.16));
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.6875rem;
+  text-transform: capitalize;
+}
+
+@media (max-width: 640px) {
+  .asgard-account-table th,
+  .asgard-account-table td {
+    padding: 0.625rem 0.75rem;
+  }
+}
+
 @media (max-width: 48rem) {
   .asgard-content {
     padding: 1rem;

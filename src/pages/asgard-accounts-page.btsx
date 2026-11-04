@@ -1,0 +1,56 @@
+import { useConvexAuth } from '@/hooks/use-convex'
+import { useConvexQuery } from '@/hooks/use-convex-query'
+import { api } from '../../convex/_generated/api'
+import '@/styles/asgard.css'
+
+module
+  const formatDate = (timestamp: number) => new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(timestamp)
+
+setup
+  const convexAuth = useConvexAuth()
+  const accounts = useConvexQuery(
+    api.accounts.q.listForAdmin,
+    convexAuth.isAuthenticated ? { limit: 100 } : 'skip',
+    convexAuth.userId ?? ''
+  )
+
+main(className='asgard-page')
+  header(className='asgard-masthead')
+    h1(className='asgard-title') Accounts
+    p(className='asgard-subtitle') Organizations on the platform.
+
+  if convexAuth.isLoading
+    p(className='asgard-account-state' role='status') Loading accounts…
+  elseif !convexAuth.isAuthenticated
+    p(className='asgard-account-state' role='status') Sign in with a god account to view the directory.
+  elseif accounts === undefined
+    p(className='asgard-account-state' role='status') Loading accounts…
+  elseif accounts.length === 0
+    p(className='asgard-account-state') No accounts yet.
+  else
+    section(className='asgard-account-panel' aria-label='Account directory')
+      div(className='asgard-account-panel-heading')
+        h2 Accounts
+        p #{accounts.length === 100 ? 'Latest 100 accounts' : `${accounts.length} accounts`}
+      div(className='asgard-account-table-wrap')
+        table(className='asgard-account-table')
+          thead
+            tr
+              th(scope='col') Account
+              th(scope='col') Status
+              th(scope='col') Plan
+              th(scope='col') Primary contact
+              th(scope='col') Created
+          tbody
+            each account in accounts key account._id
+              tr
+                td
+                  strong #{account.name}
+                  span(className='asgard-account-slug') /#{account.slug}
+                td
+                  span(className='asgard-account-status' data-status={account.status}) #{account.status}
+                td(className='asgard-account-plan') #{account.plan}
+                td
+                  span #{account.primaryContact.name}
+                  span(className='asgard-account-email') #{account.primaryContact.email}
+                td(className='asgard-account-date') #{formatDate(account.createdAt)}

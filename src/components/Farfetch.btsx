@@ -1,0 +1,98 @@
+div(class="grid box-border w-[1393px] h-[68px] max-w-[1440px] mr-[24px] ml-[24px] grid-cols-[1393px] grid-rows-[0px_68px] text-[rgb(34,_34,_34)] [font-family:Farfetch_Basis,_Helvetica_Neue,_Arial,_sans-serif] text-[15px] leading-[19.9995px]")
+  div(class="box-border")
+  div(class="grid box-border h-[44px] mt-[12px] mb-[12px] items-center grid-cols-[572px_201px_572px] grid-rows-[44px] gap-y-[24px] gap-x-[24px] bg-[rgba(255,_255,_255,_0)]")
+    nav(aria-label="Choose a department" class="flex box-border h-[44px] items-center")
+      div(class="hidden box-border ml-[-12px]")
+        button(class="grid relative w-fit min-w-[44px] min-h-[44px] max-w-min pt-[10px] pr-[44px] pb-[10px] pl-[16px] justify-center items-center grid-flow-col text-[rgb(34,_34,_34)] [font-family:Farfetch_Basis,_Helvetica_Neue,_Arial,_sans-serif] text-[15px] font-bold leading-[19.9995px] [white-space-collapse:collapse] [text-wrap-mode:nowrap] bg-[rgba(255,_255,_255,_0)] border-t-[1px] border-r-[1px] border-b-[1px] border-l-[1px] [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgba(255,_255,_255,_0)] [border-right-color:rgba(255,_255,_255,_0)] [border-bottom-color:rgba(255,_255,_255,_0)] [border-left-color:rgba(255,_255,_255,_0)]")
+          | Menswear
+          svg(
+            ~ aria-hidden="true"
+            ~ class="box-border absolute right-[12px] w-[24px] h-[24px] fill-[rgb(34,_34,_34)]"
+            ~ )
+            use(xlink:href="#iconLoaded-chevronDownSmall" class="box-border")
+      ul(
+        ~ role="menubar"
+        ~ class="flex box-border w-[300.703px] h-[44px] mt-0 mb-0 ml-[-12px] pl-0 [transform-origin:150.352px_22px] list-none"
+        ~ )
+        li(role="none" class="box-border w-[116.844px]")
+          a(
+            ~ role="menuitem"
+            ~ href="https://www.farfetch.com/ph/shopping/women/items.aspx"
+            ~ class="grid box-border relative h-[44px] min-w-[44px] min-h-[44px] max-w-min pt-[10px] pr-[12px] pb-[10px] pl-[12px] flex-col flex-wrap justify-center items-center grid-cols-[90.8438px] grid-rows-[22px] grid-flow-col [white-space-collapse:collapse] [text-wrap-mode:nowrap] bg-[rgba(255,_255,_255,_0)] border-t-[1px] border-r-[1px] border-b-[1px] border-l-[1px] [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgba(255,_255,_255,_0)] [border-right-color:rgba(255,_255,_255,_0)] [border-bottom-color:rgba(255,_255,_255,_0)] [border-left-color:rgba(255,_255,_255,_0)]"
+            ~ )
+            | Womenswear
+        li(role="none" class="box-border w-[97px]")
+          a(
+            ~ role="menuitem"
+            ~ href="https://www.farfetch.com/ph/shopping/men/items.aspx"
+            ~ class="grid box-border relative h-[44px] min-w-[44px] min-h-[44px] max-w-min pt-[10px] pr-[12px] pb-[10px] pl-[12px] flex-col flex-wrap justify-center items-center grid-cols-[71px] grid-rows-[22px] grid-flow-col font-bold [white-space-collapse:collapse] [text-wrap-mode:nowrap] bg-[rgba(255,_255,_255,_0)] border-t-[1px] border-r-[1px] border-b-[1px] border-l-[1px] [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgba(255,_255,_255,_0)] [border-right-color:rgba(255,_255,_255,_0)] [border-bottom-color:rgba(255,_255,_255,_0)] [border-left-color:rgba(255,_255,_255,_0)]"
+            ~ )
+            | Menswear
+        li(role="none" class="box-border w-[86.8594px] [transform-origin:43.4297px_22px]")
+          a(
+            ~ role="menuitem"
+            ~ href="https://www.farfetch.com/ph/shopping/kids/items.aspx"
+            ~ class="grid box-border relative w-[86.8594px] h-[44px] min-w-[44px] min-h-[44px] max-w-min pt-[10px] pr-[12px] pb-[10px] pl-[12px] flex-col flex-wrap justify-center items-center grid-cols-[60.8594px] grid-rows-[22px] grid-flow-col [white-space-collapse:collapse] [text-wrap-mode:nowrap] bg-[rgba(255,_255,_255,_0)] border-t-[1px] border-r-[1px] border-b-[1px] border-l-[1px] [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgba(255,_255,_255,_0)] [border-right-color:rgba(255,_255,_255,_0)] [border-bottom-color:rgba(255,_255,_255,_0)] [border-left-color:rgba(255,_255,_255,_0)]"
+            ~ )
+            | Kidswear
+    a(
+      ~ aria-label="FARFETCH homepage."
+      ~ href="https://www.farfetch.com/ph/"
+      ~ title="FARFETCH homepage."
+      ~ class="grid box-border h-[26px] items-center grid-cols-[201px] grid-rows-[26px] col-start-[2]"
+      ~ )
+      svg(
+        ~ xmlns="http://www.w3.org/2000/svg"
+        ~ viewBox="0 0 340.19 42.24"
+        ~ aria-hidden="true"
+        ~ class="box-border overflow-x-visible overflow-y-visible"
+        ~ )
+        path(
+          ~ d="M56.74 18.14c-1.1-2.39-1.67-3.63-2.44-5.49-.71 1.86-.95 2.43-2.29 5.63l-2.62 6.44H59.7zM46.43 32.69l-3.68 8.12H32L50.72 1.38h9.07L78.5 40.81H67.91l-4-8.12zm58.85-14.22c2.19 0 3.1-.14 4-.62a4.68 4.68 0 002.34-4 4.72 4.72 0 00-2.34-4c-.86-.48-1.77-.58-4-.58H92.15v9.12zM92.15 40.81h-9.88V1.38H108c4.58 0 7.06.58 9.4 2a10.38 10.38 0 014.82 8.83c0 4.68-2.43 8.16-6.87 10 3.91 1.39 5.11 3.58 5.2 9.74.19 4.92.48 6.35 1.67 8.88h-10.88c-.72-2.2-.86-3.1-.76-6.88 0-5.72-1.58-7.49-6.64-7.49H92.15zm76.27 0V1.38h36.08v8h-26.2v7.4h23.15v8H178.3v8.12h26.2v8zm64.72 0h-9.88V9.35h-13.65v-8h37.13v8h-13.6zm62-15.42c-2.82 11.22-10.5 16.85-23.24 16.85-14.51 0-23.68-8.07-23.68-20.76 0-13 9.45-21.48 23.91-21.48 6.93 0 12.37 1.81 16.66 5.68a17.2 17.2 0 015.78 9.45h-10.65c-2-5-5.91-7.45-11.83-7.45-7.93 0-13.41 5.59-13.41 13.61 0 7.82 5.44 13.27 13.22 13.27 6.3 0 10.07-2.82 12.36-9.17zm35.18-24.01v15.37H310V1.38h-9.88v39.43H310V24.72h20.29v16.09h9.87V1.38zM0 40.81V1.38h34.6v8H9.88v7.4h22.67v8H9.88v16.03zm128.71 0V1.38h34.61v8h-24.73v7.4h22.72v8h-22.72v16.03z"
+          ~ class="box-border"
+          ~ )
+    div(class="flex box-border h-[44px] justify-end items-center")
+      button(
+        ~ aria-label="Language and region"
+        ~ title="Language and region"
+        ~ class="flex relative w-[44px] h-[44px] pt-0 pr-0 pb-0 pl-0 shrink-0 justify-center items-center text-[rgb(34,_34,_34)] [font-family:Farfetch_Basis,_Helvetica_Neue,_Arial,_sans-serif] text-[15px] font-bold bg-[rgba(255,_255,_255,_0)] border-t-[1px] border-r-[1px] border-b-[1px] border-l-[1px] [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgba(255,_255,_255,_0)] [border-right-color:rgba(255,_255,_255,_0)] [border-bottom-color:rgba(255,_255,_255,_0)] [border-left-color:rgba(255,_255,_255,_0)]"
+        ~ )
+        div(
+          ~ role="img"
+          ~ aria-label="flag PH"
+          ~ class="box-border relative w-[24px] h-[24px] leading-[0px]"
+          ~ )
+          svg(aria-hidden="true" class="box-border w-[24px] h-[24px] fill-[rgb(34,_34,_34)]")
+            use(xlink:href="#iconLoaded-ph" class="box-border")
+      button(
+        ~ aria-label="Login page."
+        ~ title="Sign in"
+        ~ class="flex relative w-[44px] h-[44px] pt-0 pr-0 pb-0 pl-0 shrink-0 justify-center items-center text-[rgb(34,_34,_34)] [font-family:Farfetch_Basis,_Helvetica_Neue,_Arial,_sans-serif] text-[15px] font-bold bg-[rgba(255,_255,_255,_0)] border-t-[1px] border-r-[1px] border-b-[1px] border-l-[1px] [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgba(255,_255,_255,_0)] [border-right-color:rgba(255,_255,_255,_0)] [border-bottom-color:rgba(255,_255,_255,_0)] [border-left-color:rgba(255,_255,_255,_0)]"
+        ~ )
+        svg(aria-hidden="true" class="box-border w-[24px] h-[24px] fill-[rgb(34,_34,_34)]")
+          use(xlink:href="#iconLoaded-user" class="box-border")
+      span(class="box-border absolute top-[34.5px] right-[24px] bottom-[90.5px] left-[1418px] w-[1px] h-[1px] mt-[-1px] mr-[-1px] mb-[-1px] ml-[-1px] overflow-x-hidden overflow-y-hidden")
+      a(
+        ~ aria-label="Wishlist 0 items."
+        ~ href="https://www.farfetch.com/ph/wishlist"
+        ~ title="Wishlist"
+        ~ class="flex box-border relative w-[44px] h-[44px] shrink-0 justify-center items-center font-bold bg-[rgba(255,_255,_255,_0)] border-t-[1px] border-r-[1px] border-b-[1px] border-l-[1px] [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgba(255,_255,_255,_0)] [border-right-color:rgba(255,_255,_255,_0)] [border-bottom-color:rgba(255,_255,_255,_0)] [border-left-color:rgba(255,_255,_255,_0)]"
+        ~ )
+        span(class="flex box-border relative w-[24px] h-[24px] flex-col gap-y-[12px] gap-x-[12px]")
+          svg(aria-hidden="true" class="box-border fill-[rgb(34,_34,_34)]")
+            use(xlink:href="#iconLoaded-heart" class="box-border")
+      span(class="box-border absolute top-[34.5px] right-[24px] bottom-[90.5px] left-[1418px] w-[1px] h-[1px] mt-[-1px] mr-[-1px] mb-[-1px] ml-[-1px] overflow-x-hidden overflow-y-hidden") Item added to bag. 2 items.
+      a(
+        ~ aria-label="Bag 2 items."
+        ~ href="https://www.farfetch.com/ph/checkout/basket.aspx"
+        ~ title="Bag"
+        ~ class="flex box-border relative w-[44px] h-[44px] shrink-0 justify-center items-center font-bold bg-[rgba(255,_255,_255,_0)] border-t-[1px] border-r-[1px] border-b-[1px] border-l-[1px] [border-top-style:solid] [border-right-style:solid] [border-bottom-style:solid] [border-left-style:solid] [border-top-color:rgba(255,_255,_255,_0)] [border-right-color:rgba(255,_255,_255,_0)] [border-bottom-color:rgba(255,_255,_255,_0)] [border-left-color:rgba(255,_255,_255,_0)]"
+        ~ )
+        span(class="flex box-border relative w-[24px] h-[24px] flex-col gap-y-[12px] gap-x-[12px]")
+          svg(aria-hidden="true" class="box-border fill-[rgb(34,_34,_34)]")
+            use(xlink:href="#iconLoaded-bag" class="box-border")
+          span(class="flex box-border absolute top-[6px] right-0 bottom-[2px] left-[8px] min-w-[16px] pr-[4px] pl-[4px] justify-center items-center text-[rgb(255,_255,_255)] text-[13px] leading-[16px] text-center bg-[rgb(34,_34,_34)] rounded-tl-[1000px] rounded-tr-[1000px] rounded-br-[1000px] rounded-bl-[1000px] shadow-[rgb(255,_255,_255)_0px_0px_0px_2px] [transform:matrix(1,_0,_0,_1,_4,_8)]") 2
+      span(
+        ~ aria-hidden="true"
+        ~ class="box-border absolute top-[57px] right-[24px] bottom-[68px] left-[1418px] w-[1px] h-[1px] mt-[-1px] mr-[-1px] mb-[-1px] ml-[-1px] overflow-x-hidden overflow-y-hidden self-end"
+        ~ )

@@ -10,7 +10,7 @@
     "cf:dev": "bun run build && wrangler dev",
     "cf:dry-run": "bun run build && wrangler deploy --dry-run",
     "cf:deploy": "bun run build && wrangler deploy",
-    "cf:secrets": "bun scripts/cloudflare-secrets.ts",
+    "cf:secrets": "bun scripts/secret-put.ts",
     "test": "bun test tests",
     "typecheck": "tsrx-tsc --noEmit",
     "check": "bun run typecheck && bun run build",

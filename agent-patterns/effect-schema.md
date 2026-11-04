@@ -1,124 +1,227 @@
 # Effect Schema patterns
 
-Use Effect `Schema` as the source of truth for both runtime validation and TypeScript types. Define schemas at module scope, decode untrusted input at system boundaries, and pass decoded domain values through the application.
+This project uses Effect **4.0.6**. Import Schema APIs from the installed
+package with `import { Schema } from "effect"`. The examples below are adapted
+from the vendored Effect guide and tests. That checkout is reference material
+only; never import from it in application code.
 
-Examples below follow the Effect v4 API in `repos/effect/packages/effect/src/Schema.ts`. They are adapted from `SCHEMA.md`, `ai-docs/src/01_effect/02_schema/10_schema-basics.ts`, and `test/schema/Schema.test.ts` in the vendored Effect repository. Application code should import the published `effect` package, never from `repos/effect`.
+## Start with the boundary
 
-## Common constructors and combinators
+A schema describes both the value used by the application (`Type`) and the
+serialized/input value (`Encoded`). They are the same for a plain
+`Schema.Struct`, but can differ when a field transforms, such as a number
+encoded as a string.
 
 ```ts
 import { Schema } from "effect"
 
-export const UserId = Schema.String.pipe(Schema.brand("UserId"))
-
-export const User = Schema.Struct({
-  id: UserId,
-  name: Schema.NonEmptyString,
-  role: Schema.Literals(["admin", "member"]),
-  // optionalKey means the property may be absent
-  nickname: Schema.optionalKey(Schema.String)
+const AccountSchema = Schema.Struct({
+  slug: Schema.NonEmptyString,
+  seats: Schema.FiniteFromString,
+  status: Schema.Literals(["active", "suspended"])
 })
 
-export const UserList = Schema.Array(User)
-export const ScoresByName = Schema.Record(Schema.String, Schema.Finite)
-export const Status = Schema.Union([
-  Schema.Literal("pending"),
-  Schema.Literal("complete")
-])
-
-export type User = typeof User.Type
-export type UserInput = typeof User.Encoded
+type Account = typeof AccountSchema.Type
+type AccountInput = typeof AccountSchema.Encoded
+// Account.seats is number; AccountInput.seats is string.
 ```
 
-Use `Schema.Struct` for object shapes, `Schema.Array` for homogeneous arrays, `Schema.Tuple` for positional values, `Schema.Record` for dynamic keys, and `Schema.Union` / `Schema.Literals` for alternatives. Add constraints with `.check`, for example `Schema.Number.check(Schema.isGreaterThan(0))` or `Schema.String.check(Schema.isMinLength(3))`.
+Keep the schema as the source of both the runtime check and the TypeScript
+types. Use `typeof MySchema.Type` or `typeof MySchema.Encoded` instead of
+duplicating those shapes by hand.
 
-`Schema.optionalKey(S)` makes an object key optional. `Schema.optional(S)` makes `undefined` part of a value schema; it does not make a `Struct` key optional. Use `Schema.NullOr(S)` when `null` is part of the data format.
+## Constructors and combinators
 
-For nominal distinctions, `Schema.brand("UserId")` changes the TypeScript type but does not add runtime validation. Pair it with a check if the value needs runtime constraints.
-
-## Decoding and encoding
-
-`Type` is the decoded/domain representation; `Encoded` is the representation accepted by the schema at the boundary. Prefer the effect-returning APIs inside Effect programs so validation errors stay in the typed error channel.
+- **Primitives:** `Schema.String`, `Schema.Number`, `Schema.Finite`,
+  `Schema.Boolean`, `Schema.BigInt`, `Schema.Date`, `Schema.Null`, and
+  `Schema.Unknown`.
+- **Exact values:** `Schema.Literal("ready")` for one value and
+  `Schema.Literals(["ready", "closed"])` for a set of values.
+- **Objects:** `Schema.Struct({ ... })` for named fields. A field is required
+  unless marked optional.
+- **Optional fields:** In a struct, `Schema.optionalKey(S)` allows the
+  property to be absent, but does not add `undefined` to the value type.
+  `Schema.optional(S)` also allows absence and adds `undefined` to the value
+  type. Add `Schema.NullOr(S)` when `null` is valid too.
+- **Collections:** `Schema.Array(S)`, `Schema.NonEmptyArray(S)`,
+  `Schema.Tuple([A, B])`, and `Schema.Record(keySchema, valueSchema)`.
+- **Alternatives:** `Schema.Union([A, B])` accepts a value matching a member;
+  prefer `Schema.TaggedUnion({ Created: { ... }, Deleted: { ... } })` for
+  discriminated messages.
+- **Refinements:** `.check(...)` adds synchronous checks without changing the
+  schema's type. Prefer the built-in checks such as `Schema.isMinLength(3)`,
+  `Schema.isUUID()`, `Schema.isInt()`, and `Schema.isGreaterThan(0)`.
+- **Nominal IDs:** `.pipe(Schema.brand("AccountId"))` distinguishes otherwise
+  identical TypeScript values. `brand` is type-level only; use a check or
+  `Schema.fromBrand` when a runtime condition is also required.
 
 ```ts
-import { Effect, Schema } from "effect"
-
-export class User extends Schema.Class<User>("app/User")({
-  id: Schema.String,
+const CreateAccount = Schema.Struct({
   name: Schema.NonEmptyString,
-  role: Schema.Literals(["admin", "member"])
-}) {}
-
-export const decodeUser = Schema.decodeUnknownEffect(User)
-export const encodeUser = Schema.encodeEffect(User)
-
-export const loadUser = (payload: unknown) =>
-  decodeUser(payload).pipe(
-    Effect.flatMap((user) => encodeUser(user))
-  )
+  handle: Schema.String.check(Schema.isPattern(/^[a-z0-9-]+$/)),
+  seats: Schema.Finite.check(Schema.isInt(), Schema.isGreaterThan(0)),
+  website: Schema.optionalKey(Schema.String)
+})
 ```
 
-Use `decodeUnknownEffect` when the input is `unknown`, and `decodeEffect` when it is already typed as the schema's `Encoded` representation. Use the matching `encodeEffect` / `encodeUnknownEffect` direction to serialize a decoded value. For synchronous boundaries, use `decodeUnknownSync` when throwing `SchemaError` on invalid input is appropriate, or `decodeUnknownExit` when the caller needs an explicit `Exit`. `decodeUnknownSync` returns the decoded value on success and throws on schema failure. Reuse module-level schemas and parser functions instead of rebuilding them for each request.
+Use `Schema.Finite` when `NaN` and infinities are invalid. `Schema.Number`
+allows them. If the wire format is text, use `Schema.FiniteFromString` rather
+than parsing and validating the number manually.
+
+## Decode and encode
+
+Treat data from HTTP, storage, environment variables, and other untyped
+boundaries as `unknown`. Decode it before using it. The matching encoder
+validates an application value and returns the schema's encoded form.
+
+```ts
+const input: unknown = {
+  slug: "north-star",
+  seats: "12",
+  status: "active"
+}
+
+const account = Schema.decodeUnknownSync(AccountSchema)(input)
+// account.seats === 12
+
+const wireValue = Schema.encodeSync(AccountSchema)(account)
+// wireValue.seats === "12"
+```
+
+Choose the adapter for the boundary:
+
+| Use | API | Failure behavior |
+| --- | --- | --- |
+| Unknown input, synchronous and service-free | `Schema.decodeUnknownSync(S)(input)` | Throws `Schema.SchemaError` for schema issues |
+| Already typed encoded input | `Schema.decodeSync(S)(input)` | Throws on schema issues |
+| Unknown input inside an Effect workflow | `Schema.decodeUnknownEffect(S)(input)` | Fails with `Schema.SchemaError`; supports async work and services |
+| Unknown input where a `Result` is convenient | `Schema.decodeUnknownResult(S)(input)` | Returns `Result` with a `Schema.SchemaError` failure |
+| Unknown input where only success/failure matters | `Schema.decodeUnknownOption(S)(input)` | Returns `None` for schema issues; details are lost |
+
+The corresponding encoding functions are `encodeUnknownSync`, `encodeSync`,
+`encodeUnknownEffect`, `encodeUnknownResult`, and `encodeUnknownOption`.
+Use the `Unknown` version when the value is not statically known to match the
+schema's encoded or decoded type.
 
 ## Transformations
 
-Prefer built-in transformation schemas for common representation changes. They keep the source and destination types explicit and preserve the reverse encoding direction where supported.
+Use the built-in transformation schemas when one exists. For example,
+`Schema.FiniteFromString` decodes finite numeric text to a number and encodes
+the number back to text. `Schema.NumberFromString` intentionally accepts
+`NaN` and infinities, so it is not a substitute when finiteness matters.
 
-```ts
-import { Schema } from "effect"
-
-export const Port = Schema.FiniteFromString
-export const CreatedAt = Schema.DateFromString
-
-// Encoded: string; Type: number
-const port: typeof Port.Type = Schema.decodeUnknownSync(Port)("8080")
-// Encodes back to the string representation
-const encoded: typeof Port.Encoded = Schema.encodeSync(Port)(port)
-```
-
-For a custom conversion, compose schemas with `Schema.decodeTo` and an explicit transformation rather than parsing by hand. The Effect tests demonstrate trimming then decoding a finite number:
+For same-type normalization, use `Schema.decode` with a reusable
+`SchemaTransformation`:
 
 ```ts
 import { Schema, SchemaTransformation } from "effect"
 
-const TrimmedFinite = Schema.Trim.pipe(
-  Schema.decodeTo(
-    Schema.FiniteFromString,
-    SchemaTransformation.passthrough()
-  )
+const TrimmedName = Schema.String.pipe(
+  Schema.decode(SchemaTransformation.trim())
 )
+
+Schema.decodeUnknownSync(TrimmedName)("  Ada  ") // "Ada"
 ```
 
-The decoded value is a number and the encoded representation is a string. Test both directions whenever a schema transforms data: a decoder that works does not by itself prove the value can be encoded back correctly.
+Use `Schema.decodeTo` when the decoded type differs from the encoded type. A
+custom transformation defines both directions; `decode` maps source values to
+the target's encoded form, and `encode` maps target values back to the source.
+
+```ts
+const MetersFromCentimeters = Schema.Finite.pipe(
+  Schema.decodeTo(
+    Schema.Finite,
+    SchemaTransformation.transform({
+      decode: (centimeters) => centimeters / 100,
+      encode: (meters) => meters * 100
+    })
+  )
+)
+
+Schema.decodeSync(MetersFromCentimeters)(250) // 2.5
+Schema.encodeSync(MetersFromCentimeters)(2.5) // 250
+```
+
+For a transformation that can fail or needs asynchronous work, use
+`SchemaTransformation.transformEffect` or a `SchemaGetter` effectful getter,
+and call an Effect or Promise decoder. Do not put I/O inside `.check(...)`:
+checks are synchronous.
 
 ## Error handling
 
-Schema decoding reports structured `SchemaError` failures. Keep those failures in the Effect error channel, then map them to an application error only where the application needs a different public error type.
+For human-readable synchronous validation, narrow thrown values with
+`Schema.isSchemaError` and preserve unrelated errors:
+
+```ts
+try {
+  return Schema.decodeUnknownSync(CreateAccount)(input)
+} catch (error) {
+  if (Schema.isSchemaError(error)) {
+    return { ok: false, message: error.message }
+  }
+  throw error
+}
+```
+
+For explicit branching without exceptions, use the `Result` adapter:
+
+```ts
+import { Result, Schema } from "effect"
+
+const result = Schema.decodeUnknownResult(CreateAccount)(input)
+if (Result.isFailure(result)) {
+  console.error(result.failure.message)
+} else {
+  console.log(result.success.name)
+}
+```
+
+In Effect code, keep schema failures in the typed error channel:
 
 ```ts
 import { Effect, Schema } from "effect"
 
-export class InvalidUserPayload extends Schema.TaggedError<InvalidUserPayload>()(
-  "InvalidUserPayload",
-  { message: Schema.String }
-) {}
-
-export const parseUserPayload = (input: unknown) =>
-  Schema.decodeUnknownEffect(User)(input).pipe(
-    Effect.mapError((error) =>
-      new InvalidUserPayload({ message: error.message })
-    )
-  )
+const program = Schema.decodeUnknownEffect(CreateAccount)(input).pipe(
+  Effect.map((account) => account.name)
+)
 ```
 
-Use `decodeUnknownResult` or `decodeUnknownExit` when a synchronous caller needs an explicit success/failure value. Avoid swallowing parse failures or replacing them with unchecked casts. Error messages include paths into nested input; preserve them when translating errors if they help callers fix invalid data.
+Use `{ errors: "all" }` when a form or API response should report every
+independent check failure. The default is focused reporting. Use
+`Schema.catchDecoding` only for an intentional recovery rule; it can replace a
+bad input with a fallback and can hide corrupt or malicious data. Return
+`Option.none()` from a recovery handler only when omitting that value is the
+intended behavior.
 
-## What to avoid
+## Avoid
 
-- Do not validate untrusted data with ad hoc predicates, assertions, or manual parsing when a Schema can describe the input and transformation.
-- Do not use `Schema.optional` to make an object property optional; use `Schema.optionalKey` in a struct.
-- Do not confuse `Type` with `Encoded`, especially for dates, branded values, and string-to-number transformations.
-- Do not assume synchronous decoding cannot fail: `decodeUnknownSync` throws `SchemaError`; use `decodeUnknownExit` or `decodeUnknownResult` to represent failure as a value.
-- Do not put side effects in `.check` predicates. Checks should be deterministic validations, not application workflows.
-- Do not import implementation details from the vendored `repos/effect` tree. It is reference material; app code imports from `effect`.
-- Do not assume a transformation is reversible without checking its encoding semantics and testing both directions.
+- Do not use a type assertion or a hand-written predicate as a replacement for
+  decoding untrusted input.
+- Do not confuse `Type` with `Encoded`; a schema may transform between them.
+- Do not use `Schema.Number` when only finite numbers are valid.
+- Do not treat `optionalKey`, `optional`, `NullOr`, and `UndefinedOr` as
+  interchangeable; each describes a different wire shape.
+- Do not use sync adapters when a schema needs services or asynchronous
+  transformations; use the Effect or Promise adapter.
+- Do not use `decodeUnknownOption` when callers need useful validation errors.
+- Do not make checks or transformation functions depend on side effects.
+- Do not silently recover from validation failures unless the domain explicitly
+  defines that fallback.
+- Do not import from `repos/effect` or an alias to it. Application code must use
+  the installed `effect` dependency.
+
+## Source references
+
+These examples and guidance follow the vendored Effect 4.0.6 implementation and
+tests:
+
+- `repos/effect/packages/effect/src/Schema.ts` — constructors, codecs,
+  transformation and error adapters.
+- `repos/effect/packages/effect/src/SchemaTransformation.ts` and
+  `SchemaGetter.ts` — bidirectional and effectful transformation primitives.
+- `repos/effect/packages/effect/test/schema/Schema.test.ts` — decoding,
+  encoding, checks, and recovery behavior.
+- `repos/effect/packages/effect/test/schema/SchemaTransformation.test.ts` —
+  transformation behavior and round trips.
+- `repos/effect/packages/effect/SCHEMA.md` — full Schema guide, including
+  composites, optional fields, errors, and codecs.

@@ -6,7 +6,7 @@ import { canUseAccount } from '@/lib/account'
 import { Icon, type IconName } from '@/lib/icons'
 // import { resolveAccountProfileImageUrl } from '@/lib/r2/prefixes'
 import { buildAdminHandoffUrl } from '@/lib/routing/admin-subdomain'
-import { buildAsgardNavigationUrl } from '@/lib/routing/asgard-navigation'
+import { buildAsgardHandoffUrl } from '@/lib/routing/asgard-console'
 import { cn, getInitials } from '@/lib/utils'
 import type { User } from 'firebase/auth'
 import { useEffect, useRef, useState } from 'octane'
@@ -90,12 +90,13 @@ setup
       setIsNavigatingToAdmin(false)
     }
   }
-  const handleAsgardNavigation = () => {
+  const handleAsgardNavigation = async () => {
     if (!user || isNavigatingToAsgard) return
     setIsOpen(false)
     setIsNavigatingToAsgard(true)
     try {
-      window.location.assign(buildAsgardNavigationUrl(new URL(window.location.href)).toString())
+      const idToken = await user.getIdToken(true)
+      window.location.assign(buildAsgardHandoffUrl(new URL(window.location.href), idToken).toString())
     } catch (error) {
       console.error('Failed to navigate to the Asgard app.', error)
       setIsNavigatingToAsgard(false)

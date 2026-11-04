@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import '@/styles/asgard.css'
 
 module
-  export interface AsgardNavItem {
+  export interface NavItem {
     to: string
     label: string
     icon: IconName
@@ -19,7 +19,7 @@ module
   export interface AsgardSidebarProps {
     /** The console's own path, which is what `to` is matched against. */
     path: string
-    items: readonly AsgardNavItem[]
+    items: readonly NavItem[]
     isCompact: boolean
     toggleSidebar: VoidFunction
     /** Shown under the nav, where there is room for it. */
@@ -29,7 +29,7 @@ module
     children?: unknown
   }
 
-  const isActive = (path: string, item: AsgardNavItem) =>
+  const isActive = (path: string, item: NavItem) =>
     item.exact ? path === item.to : path === item.to || path.startsWith(`${item.to}/`)
 
   /**
@@ -109,12 +109,8 @@ aside(className='asgard-sidebar' data-compact={isCompact || undefined} aria-labe
     div(className='asgard-sidebar-header' data-sidebar-hover-ignore={true})
       div(className='asgard-brand')
         Link(to='/' className='asgard-brand-link' href={homeUrl} aria-label='Return to Lucky Pick')
-          div(className="brand-mark rounded-full! aspect-square! scale-50")
-            span(className="brand-mark__number")
-            span(className="brand-mark__orbit blur-xs" aria-hidden="true")
-            span(className="brand-mark__orbiter -rotate-5 scale-130 opacity-90" aria-hidden="true")
-            span(className="brand-mark__orbit" aria-hidden="true")
-          // span(aria-hidden={true} className={cn('h-4 w-0.5 shrink-0 rounded-full bg-active', isCompact && 'h-0.5 w-3')})
+          div(className={cn("flex items-center justify-center rounded-full! aspect-square! size-8!", {'size-11!': isCompact})})
+            Icon(name='asgard' size={28} className='asgard-link-icon')
           span Asgard
         if !isCompact
           ToggleSidebar(isCompact={isCompact} toggleSidebar={toggleSidebar} className='justify-end')
@@ -147,8 +143,8 @@ aside(className='asgard-sidebar' data-compact={isCompact || undefined} aria-labe
         p(className='asgard-sidebar-identity' title={identity}) #{identity}
       div(className='flex items-center justify-center')
         | #{children}
-      if isCompact
-        ToggleSidebar(isCompact={isCompact} toggleSidebar={toggleSidebar})
+      // if isCompact
+      //   ToggleSidebar(isCompact={isCompact} toggleSidebar={toggleSidebar})
 
     div(
       ~ aria-hidden={true}

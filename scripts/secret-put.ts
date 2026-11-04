@@ -7,10 +7,10 @@ type ParsedVariable = {
 
 const usage = [
   'Usage:',
-  '  bun run cloudflare:secrets -- <env-file>',
+  '  bun run cf:secrets -- <env-file>',
   '',
   'Example:',
-  '  bun run cloudflare:secrets -- .env.production'
+  '  bun run cf:secrets -- .env.production'
 ].join('\n')
 
 function isEscaped(value: string, index: number) {

@@ -19,6 +19,7 @@ const lazy = (load: () => Promise<unknown>): RouteComponentOption =>
 
 const asgardShell = lazy(() => import('@/pages/asgard-page.btsx'))
 const asgardOverview = lazy(() => import('@/pages/asgard-overview-page.btsx'))
+const asgardAccounts = lazy(() => import('@/pages/asgard-accounts-page.btsx'))
 const adminShell = lazy(() => import('@/pages/admin-page.btsx'))
 const adminOverview = lazy(() => import('@/pages/admin-overview-page.btsx'))
 
@@ -32,7 +33,13 @@ function createAsgardRouteTree(): AnyRoute {
     component: asgardOverview
   })
 
-  return rootRoute.addChildren([overviewRoute])
+  const accountsRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/accounts',
+    component: asgardAccounts
+  })
+
+  return rootRoute.addChildren([overviewRoute, accountsRoute])
 }
 
 /** Admin as the whole site, which is what it is on its own subdomain. */
@@ -86,6 +93,12 @@ export function createConsoleFallbackRoutes(rootRoute: AnyRoute): AnyRoute[] {
     component: asgardOverview
   })
 
+  const asgardAccountsRoute = createRoute({
+    getParentRoute: () => asgardRoute,
+    path: 'accounts',
+    component: asgardAccounts
+  })
+
   const adminRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: adminRoutePrefix,
@@ -98,5 +111,5 @@ export function createConsoleFallbackRoutes(rootRoute: AnyRoute): AnyRoute[] {
     component: adminOverview
   })
 
-  return [asgardRoute.addChildren([asgardIndexRoute]), adminRoute.addChildren([adminIndexRoute])]
+  return [asgardRoute.addChildren([asgardIndexRoute, asgardAccountsRoute]), adminRoute.addChildren([adminIndexRoute])]
 }

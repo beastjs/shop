@@ -1,8 +1,49 @@
-
 import Topbar from "./components/Topbar.btsx";
 import Footer from "./components/Footer.btsx";
 import { Outlet } from "@octanejs/tanstack-router";
+import { useEffect } from "octane";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 props {}:{}
+setup
+  // One smooth-scroll instance for the whole storefront, created once (empty deps) so
+  // re-renders and route changes never reset its momentum. Reduced-motion users get native scroll.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const lenis = new Lenis({
+      autoRaf: true,
+      // 0.1 settles in ~a third of a second: smooth without the floaty lag of lower values.
+      lerp: 0.1,
+      anchors: true,
+      // Touch keeps native momentum scrolling, which already feels right on phones.
+      syncTouch: false,
+      // Drawers, the cart list and menus scroll themselves instead of the page.
+      allowNestedScroll: true,
+      // Clicking an internal link drops leftover inertia so the next page starts still.
+      stopInertiaOnNavigate: true,
+    })
+    // Base UI drawers lock scroll with overflow: hidden on <body>. Lenis scrolls the window
+    // itself, so it ignores that lock (and its own autoToggle only watches <html>).
+    // Pause Lenis whenever either element is locked so the page can't scroll behind a drawer.
+    const root = document.documentElement
+    const isLockValue = (value: string) => value === "hidden" || value === "clip"
+    const syncLock = () => {
+      const body = getComputedStyle(document.body)
+      // <html> is read from its inline style only: lenis.stop() itself adds overflow: clip
+      // to <html> via a class, and reading that back would keep Lenis stopped forever.
+      const locked = isLockValue(body.overflow) || isLockValue(body.overflowY)
+        || isLockValue(root.style.overflow) || isLockValue(root.style.overflowY)
+      if (locked) lenis.stop()
+      else lenis.start()
+    }
+    const lockObserver = new MutationObserver(syncLock)
+    lockObserver.observe(root, { attributes: true, attributeFilter: ["style"] })
+    lockObserver.observe(document.body, { attributes: true, attributeFilter: ["style", "class"] })
+    return () => {
+      lockObserver.disconnect()
+      lenis.destroy()
+    }
+  }, [])
 
 fragment
   Topbar

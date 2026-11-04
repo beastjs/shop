@@ -230,44 +230,119 @@ a {
   background-color: color-mix(in srgb, var(--mac-blue), transparent 10%);
 }
 
+/* ---------- Runner button (scribble-fill CTA) ----------
+   Enter is expressive (the stroke draws), exit is quick (system responding).
+   Icon + label share one color transition so they never flip out of sync. */
 .runner {
+  --runner-ease: cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
   isolation: isolate;
-  display: inline-grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
-  border-radius: 6px;
-  height: 52px;
-  padding: 0px 10px;
+  border-radius: 8px;
+  height: 44px;
+  padding: 0 14px;
   background: #fff;
   color: #0e0d0d;
-  font-size: 16px;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.01em;
   white-space: nowrap;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 0 0 1px rgb(0 0 0 / 0.04);
+  transition: transform 160ms ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+.runner:active {
+  transform: scale(0.97);
+}
+.runner:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 .runner-art {
   position: absolute;
   inset: 0;
+  z-index: -1;
   width: 100%;
   height: 100%;
-  color: #55b98b;
   pointer-events: none;
+  /* Static: the old -5deg -> -6deg hover snap had no transition. */
+  transform: rotate(-6deg) scale(2.35);
 }
 .runner-trace {
   stroke-width: 4px;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
+  /* Exit: fast, both properties together. */
   transition:
-    stroke-dashoffset 1100ms ease,
-    stroke-width 800ms ease;
+    stroke-dashoffset 280ms ease-out,
+    stroke-width 280ms ease-out;
 }
-.runner:is(:hover, :focus-visible) .runner-trace {
+.runner-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 450;
+  transition: color 150ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  .runner:hover .runner-trace {
+    stroke-width: 54px;
+    stroke-dashoffset: 0;
+    transition:
+      stroke-dashoffset 650ms var(--runner-ease),
+      stroke-width 650ms var(--runner-ease);
+  }
+  .runner:hover .runner-content {
+    color: #fff;
+    /* Flip once the scribble covers the text, not before. */
+    transition: color 200ms ease 90ms;
+  }
+}
+.runner:focus-visible .runner-trace {
   stroke-width: 54px;
   stroke-dashoffset: 0;
 }
-.runner-label {
-  position: relative;
-  z-index: 1;
+.runner:focus-visible .runner-content {
+  color: #fff;
+}
+
+/* ---------- Product card ---------- */
+.product-card-img {
+  transition: transform 500ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+/* Touch devices: CTA is always shown. Pointer devices: reveal on hover/focus. */
+@media (hover: hover) and (pointer: fine) {
+  .product-card-cta {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 160ms ease-out,
+      transform 160ms ease-out;
+  }
+  /* While Lenis is mid-scroll, cards sliding under a still cursor shouldn't fire hover
+     effects: that flicker reads as jank. They resume as soon as scrolling settles. */
+  html:not(.lenis-scrolling) .product-card:hover .product-card-cta,
+  .product-card:focus-within .product-card-cta {
+    opacity: 1;
+    transform: translateY(0);
+    transition-duration: 220ms;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  html:not(.lenis-scrolling) .product-card:hover .product-card-img {
+    transform: scale(1.03);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .runner-trace,
+  .runner:hover .runner-trace {
+    transition: stroke-dashoffset 0ms, stroke-width 0ms;
+  }
+  .product-card-img,
+  .product-card-cta {
+    transform: none !important;
+  }
 }
