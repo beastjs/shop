@@ -3,5 +3,6 @@ import { Link } from "@octanejs/tanstack-router";
 import { cn } from "@/lib/utils";
 
 // Stretched link: the whole card is clickable without nesting the button inside an <a>.
-props {name, className}: { name: string, className?: ClassValue }
-Link(to="#" className={cn('outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-ring', className)}) #{name}
+// Without a category there is no item page to go to, so it stays an inert in-page link.
+props {name, sku, category, className}: { name: string, sku: string, category?: string, className?: ClassValue }
+Link(to={category ? `/${category}/${encodeURIComponent(sku)}` : '#'} className={cn('outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-ring', className)}) #{name}

@@ -5,7 +5,7 @@ import CardMedia from "./CardMedia.btsx";
 import CardLink from "./CardLink.btsx";
 import PhotoCredit from "./PhotoCredit.btsx";
 
-props {item, priority = false}: { item: ProductCardItem, priority?: boolean }
+props {item, category, priority = false}: { item: ProductCardItem, category?: string, priority?: boolean }
 setup
   const model = toCardModel(item)
   const addToCart = () => cartActions.add(item)
@@ -15,7 +15,7 @@ article.product-card(className='group/product relative flex flex-col gap-3 p-1.5
   div(className='flex flex-col gap-1 px-0.5')
     div(className='flex items-baseline justify-between gap-3')
       h3(className='min-w-0 truncate text-sm font-normal leading-5 sm:text-[15px]')
-        CardLink(name={item.name})
+        CardLink(sku={item.sku} category={category} name={item.name})
       p(className='flex shrink-0 items-baseline gap-1.5 text-sm leading-5 tabular-nums sm:text-[15px]')
         if model.wasPrice
           span(className='text-xs text-muted-foreground line-through') #{model.wasPrice}

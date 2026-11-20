@@ -3,9 +3,11 @@ import type { CardModel } from "@/lib/product/card-model";
 import { cn } from "@/lib/utils";
 
 props {credit, className}: { credit: CardModel['credit'], className?: ClassValue }
+setup
+  const hex = credit?.url.length.toString(14)
 if credit
   p(className={cn('relative z-10 min-w-0 truncate', className)})
-    | Photo by
-    a(href={credit.url} target="_blank" rel="noreferrer" className="mx-1 underline-offset-2 hover:underline") #{credit.name}
-    | on
+    | Photo
+    a(href={credit.url} target="_blank" rel="noreferrer" className="mx-1 underline-offset-2 hover:underline uppercase") #{hex}
+    | |
     a(href={credit.unsplashUrl} target="_blank" rel="noreferrer" className="ml-1 underline-offset-2 hover:underline") Unsplash

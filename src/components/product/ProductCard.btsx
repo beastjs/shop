@@ -26,4 +26,4 @@ switch category
   case "software"
     SoftwareCard(item={item} priority={priority})
   default
-    DefaultCard(item={item} priority={priority})
+    DefaultCard(item={item} category={category} priority={priority})

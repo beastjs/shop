@@ -25,18 +25,20 @@ article.product-card(className='group/product relative m-1.5 flex flex-col overf
     span(className='size-2 rounded-full bg-[#ff5f57]')
     span(className='size-2 rounded-full bg-[#febc2e]')
     span(className='size-2 rounded-full bg-[#28c840]')
-    span(className='ml-2 truncate font-mono text-[10px] leading-none text-muted-foreground') #{title.toLowerCase().replace(/\s+/g, '-')}.app
+    span(className='ml-2 truncate font-mono text-[10px] leading-none text-muted-foreground') #{title.replace(/\s+/g, '-')}
   CardMedia(model={model} priority={priority} onAdd={addToCart} className='aspect-[4/3] bg-muted')
-  div(className='flex flex-col gap-2 p-3 sm:p-4')
-    div(className='flex items-center gap-2')
-      if model.edition
-        span(className={`rounded-md px-1.5 py-0.5 text-[10px] font-semibold uppercase leading-4 tracking-[0.06em] ${tone}`}) #{model.edition}
-      span(className='text-[11px] leading-4 text-muted-foreground') Digital #{delivery.toLowerCase()}
-    h3(className='m-0 truncate text-base font-semibold leading-6 tracking-[-0.01em]')
-      CardLink(name={title})
-    div(className='flex items-end justify-between gap-3 border-t border-dashed border-border pt-2')
+  div(className='flex flex-col p-3 sm:p-4')
+    div(className='flex items-center justify-between border-b border-dashed border-border pb-2')
+      h3(className='m-0 truncate text-base font-semibold leading-6 tracking-[-0.01em]')
+        CardLink(sku={item.sku} category='software' name={title})
       p(className='m-0 flex items-baseline gap-1.5 leading-none tabular-nums')
         span(className='text-xl font-semibold tracking-[-0.02em]') #{model.price}
         if model.wasPrice
           span(className='text-xs text-muted-foreground line-through') #{model.wasPrice}
+    div(className='flex items-end justify-between gap-3 pt-3.5')
+      div(className='flex items-center gap-2')
+        if model.edition
+          span(className={`rounded-md px-1.5 py-0.5 text-[10px] font-semibold uppercase leading-4 tracking-[0.06em] ${tone}`}) #{model.edition}
+        span(className='text-[11px] leading-4 text-muted-foreground') Digital #{delivery.toLowerCase()}
+
       PhotoCredit(credit={model.credit} className='text-[10px] leading-4 text-muted-foreground')

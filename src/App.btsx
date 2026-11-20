@@ -1,11 +1,13 @@
 import Topbar from "./components/Topbar.btsx";
 import Footer from "./components/Footer.btsx";
-import { Outlet } from "@octanejs/tanstack-router";
+import { Outlet, useMatches } from "@octanejs/tanstack-router";
 import { useEffect } from "octane";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 props {}:{}
 setup
+  // Product item pages run edge to edge; every other page keeps the centered 7xl column.
+  const fullBleed = useMatches({ select: (matches) => matches.some((m) => m.routeId === '/$slug/$sku') })
   // One smooth-scroll instance for the whole storefront, created once (empty deps) so
   // re-renders and route changes never reset its momentum. Reduced-motion users get native scroll.
   useEffect(() => {
@@ -47,6 +49,6 @@ setup
 
 fragment
   Topbar
-  main(className='mx-auto w-full max-w-7xl pt-16 md:pt-0')
+  main(className={fullBleed ? 'w-full pt-16 md:pt-0' : 'mx-auto w-full max-w-7xl pt-16 md:pt-0'})
     Outlet
   Footer

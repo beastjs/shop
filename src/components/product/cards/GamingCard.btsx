@@ -20,10 +20,10 @@ article.product-card.gaming-card(className='group/product relative m-1.5 flex fl
     if model.edition
       span(className='font-mono text-[10px] uppercase leading-none tracking-[0.18em] text-[#b6ff3b]') #{model.edition} edition
     h3(className='m-0 truncate font-mono text-[13px] font-semibold uppercase leading-5 tracking-[0.04em]')
-      CardLink(name={model.productType} className='after:rounded-none')
+      CardLink(sku={item.sku} category='gaming' name={model.productType} className='after:rounded-none')
     div(className='flex items-baseline justify-between gap-3')
-      p(className='m-0 flex items-baseline gap-2 font-mono text-sm font-bold leading-5 tabular-nums')
+      PhotoCredit(credit={model.credit} className='text-[10px] leading-4 text-[#6e7191] opacity-50')
+      p(className='m-0 flex items-baseline gap-2 font-adin text-base leading-5 tabular-nums')
         span(className='text-[#b6ff3b]') #{model.price}
         if model.wasPrice
           span(className='text-xs font-normal text-[#6e7191] line-through') #{model.wasPrice}
-      PhotoCredit(credit={model.credit} className='text-[10px] leading-4 text-[#6e7191]')

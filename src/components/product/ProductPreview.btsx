@@ -1,0 +1,45 @@
+import { useState } from "octane";
+import type { ProductMedia } from "@/lib/product/types";
+import { Icon } from "@/lib/icons";
+
+module
+  // Two rows of the 2-up grid show before "Show more" — enough to judge the piece without a long scroll.
+  const INITIAL = 4
+
+// Image gallery for the product item page: a seamless 2-up grid (1-up on phones) with hairline gutters.
+props {media, name}: { media: ProductMedia[], name: string }
+setup
+  const images = media
+    .filter(m => m.type === 'image' && m.url)
+    .sort((a, b) => Number(b.isPrimary) - Number(a.isPrimary) || a.sortOrder - b.sortOrder)
+  const [expanded, setExpanded] = useState(false)
+  const visible = expanded ? images : images.slice(0, INITIAL)
+  // The grid is always at least 2x2; missing shots become quiet empty tiles so the frame holds its shape.
+  const fillers = Array.from({ length: Math.max(0, INITIAL - visible.length) }, (_, i) => i)
+section(aria-label={`${name} images`} className='relative w-full')
+  div(className='grid grid-cols-2 gap-px')
+    each image, index in visible key image.id
+      figure(className='m-0 aspect-square overflow-hidden bg-[#f4f3f1] dark:bg-[#1d1d1c]')
+        img(
+          ~ src={image.url}
+          ~ alt={image.altText ?? name}
+          ~ width={840}
+          ~ height={840}
+          ~ className='block h-full w-full object-cover'
+          ~ loading={index < 2 ? 'eager' : 'lazy'}
+          ~ fetchPriority={index === 0 ? 'high' : 'auto'}
+          ~ decoding='async'
+          ~ )
+    each slot in fillers key slot
+      div(aria-hidden="true" className='aspect-square bg-[#f4f3f1] dark:bg-[#1d1d1c]')
+  if images.length > INITIAL
+    div(className='flex justify-center py-6')
+      button(
+        ~ type='button'
+        ~ aria-expanded={expanded}
+        ~ onClick={() => setExpanded(!expanded)}
+        ~ className='inline-flex h-11 items-center gap-2 rounded-full border border-border bg-background px-5 text-[13px] leading-none transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring'
+        ~ )
+        span #{expanded ? 'Show less' : `Show all ${images.length}`}
+        span(aria-hidden="true" className={expanded ? 'rotate-180 transition-transform' : 'transition-transform'})
+          Icon(name='arrow-right' size={14} className='rotate-90')

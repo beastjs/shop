@@ -2,6 +2,7 @@ import { Icon } from "@/lib/icons";
 import { cartActions, cartCount$ } from "../index";
 import { useSignal } from "./useSignal";
 import {useState} from 'octane'
+import { cn } from "@/lib/utils";
 
 props {}:{}
 setup
@@ -15,8 +16,8 @@ button#cart-button(
   ~ onMouseEnter={handleMouseOver(true)}
   ~ onMouseLeave={handleMouseOver(false)}
   ~ onClick={cartActions.toggle}
-  ~ className="group relative flex size-10 shrink-0 items-center justify-center rounded-xl transition-colors hover:bg-mac-blue/5 hover:text-[#fff]"
+  ~ className={cn("group relative flex size-10 shrink-0 items-center justify-center rounded-xl transition-colors hover:bg-foreground/5 hover:text-[#fff]", {'[&>svg]:text-mac-blue size-10': count > 0})}
   ~ )
-  Icon(name={isHovered ? 'bag-fill':'bag'} size={26} className={isHovered ? 'text-mac-blue' : 'text-foreground/50'})
+  Icon(name={isHovered || count > 0 ? 'bag-fill':'bag'} className={cn('text-foreground',{'text-mac-blue size-5 scale-115 origin-center transition-all duration-240 ease-out': isHovered || count > 0, 'scale-125': count > 9, 'scale-135': count > 19})  })
   if count > 0
-    span(aria-hidden="true" className="absolute bottom-2.25 right-2.75 min-h-4.5 min-w-4.5 aspect-square flex items-center justify-center rounded-lg font-ark font-bold text-foreground/80 group-hover:text-[#fff] text-[12.5px] leading-none tracking-wide") #{count > 99 ? "99+" : count}
+    span(aria-hidden="true" className={cn("absolute bottom-2.25 right-2.75 min-h-4.5 min-w-4.5 aspect-square flex items-center justify-center rounded-lg font-ark font-bold text-foreground/80 group-hover:text-[#fff] text-[12.5px] leading-none tracking-wide", {'text-white': count > 0})}) #{count > 99 ? "99+" : count}

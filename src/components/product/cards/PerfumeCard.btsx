@@ -30,11 +30,11 @@ article.product-card(className='group/product relative flex flex-col gap-4 p-1.5
     if model.edition
       span(className='font-serif text-[11px] italic leading-none text-muted-foreground') #{model.edition}
     h3(className='m-0 max-w-full truncate font-serif text-xl font-normal italic leading-7')
-      CardLink(name={notes.scent || model.productType})
+      CardLink(sku={item.sku} category='perfumes' name={notes.scent || model.productType})
     if notes.concentration
       span(className='text-[10px] uppercase leading-4 tracking-[0.2em] text-muted-foreground') #{notes.concentration}
     p(className='m-0 mt-1 flex items-baseline gap-2 text-sm leading-5 tabular-nums')
       if model.wasPrice
         span(className='text-xs text-muted-foreground line-through') #{model.wasPrice}
       span #{model.price}
-    PhotoCredit(credit={model.credit} className='max-w-full text-[10px] leading-4 text-muted-foreground')
+    PhotoCredit(credit={model.credit} className='max-w-full text-[10px] leading-4 text-muted-foreground opacity-15')

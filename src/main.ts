@@ -6,6 +6,8 @@ import App from './App.btsx'
 import CategoryPage from './pages/CategoryPage.btsx'
 import CategoryPending from './pages/CategoryPending.btsx'
 import HomePage from './pages/HomePage.btsx'
+import ProductPage from './pages/ProductPage.btsx'
+import ProductPending from './pages/ProductPending.btsx'
 import { createConsoleFallbackRoutes, selectConsoleRouteTree } from './lib/consoles/route-trees'
 import './style.css'
 
@@ -14,6 +16,10 @@ if (container === null) throw new Error('Missing #app container.')
 
 function loadProducts(categorySlug: string) {
   return convex.query(api.products.listByCategory, { categorySlug })
+}
+
+function loadProduct(categorySlug: string, sku: string) {
+  return convex.query(api.products.getBySku, { categorySlug, sku })
 }
 
 function createStorefrontRouteTree() {
@@ -32,9 +38,18 @@ function createStorefrontRouteTree() {
     pendingComponent: CategoryPending,
   })
 
+  const productRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/$slug/$sku',
+    loader: ({ params }) => loadProduct(params.slug, params.sku),
+    component: ProductPage,
+    pendingComponent: ProductPending,
+  })
+
   return rootRoute.addChildren([
     homeRoute,
     categoryRoute,
+    productRoute,
     ...createConsoleFallbackRoutes(rootRoute),
   ])
 }

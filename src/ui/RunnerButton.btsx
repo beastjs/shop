@@ -23,6 +23,6 @@ button.runner(type="button" className={cn(className)} onClick={onClick})
       ~ pathLength="1"
       ~ )
   span.runner-content
-    Icon(name='add-to-bag' size={20})
+    // Icon(name='add-to-bag' size={20})
     span.runner-label #{label}
   | #{children}
