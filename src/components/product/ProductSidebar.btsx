@@ -3,7 +3,6 @@ import type { ProductDetail, ProductDetailCategory } from "@/lib/product/detail-
 import { toCardModel } from "@/lib/product/card-model";
 import { cartActions } from "@/features/cart";
 import RunnerButton from "../../ui/RunnerButton.btsx";
-import PhotoCredit from "./cards/PhotoCredit.btsx";
 
 module
   type Attribute = ProductDetail['attributes'][number]
@@ -44,20 +43,21 @@ aside(aria-label="Product details" className='flex flex-col gap-10 px-4 py-8 sm:
       h1(className='m-0 text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-balance sm:text-3xl') #{product.name}
       if product.shortDescription
         p(className='m-0 text-[15px] leading-6 text-muted-foreground text-pretty') #{product.shortDescription}
-    div(className='flex items-baseline gap-3 tabular-nums')
-      span(className='text-xl leading-7') #{model.price}
-      if model.wasPrice
-        fragment
-          span(className='text-sm text-muted-foreground line-through') #{model.wasPrice}
-          span(className='text-sm text-muted-foreground') −#{model.discount}%
-    if !product.price.isTaxInclusive
-      span(className='-mt-3 text-[11px] leading-4 text-muted-foreground') Taxes calculated at checkout
+    div(className='flex items-center justify-between')
+      div(className='flex items-baseline gap-3 tabular-nums')
+        p(className='text-xl leading-7') #{model.price}
+        if model.wasPrice
+          fragment
+            span(className='text-sm text-muted-foreground line-through') #{model.wasPrice}
+            span(className='text-sm text-muted-foreground') −#{model.discount}%
+      p(className='m-0 flex items-center gap-2 text-[13px] leading-5')
+        span(aria-hidden="true" className={stock.tone === 'ok' ? 'size-1.5 rounded-full bg-positive' : stock.tone === 'warn' ? 'size-1.5 rounded-full bg-warning' : 'size-1.5 rounded-full bg-muted-foreground'})
+        | #{stock.text}
+
   div(className='flex flex-col gap-3')
-    p(className='m-0 flex items-center gap-2 text-[13px] leading-5')
-      span(aria-hidden="true" className={stock.tone === 'ok' ? 'size-1.5 rounded-full bg-positive' : stock.tone === 'warn' ? 'size-1.5 rounded-full bg-warning' : 'size-1.5 rounded-full bg-muted-foreground'})
-      | #{stock.text}
+
     if canBuy
-      RunnerButton(className='w-full' label='Add to cart' paint={'var(--mac-blue)'} onClick={addToCart})
+      RunnerButton(className='w-full bg-foreground! text-white!' label='Add to cart' paint={'var(--mac-blue)'} onClick={addToCart})
     else
       p(className='m-0 flex h-11 items-center justify-center rounded-lg border border-border text-sm text-muted-foreground') Currently unavailable
   section(aria-labelledby="product-description" className='flex flex-col gap-3 border-t border-border pt-8')
@@ -65,9 +65,10 @@ aside(aria-label="Product details" className='flex flex-col gap-10 px-4 py-8 sm:
     p(className='m-0 text-[15px] leading-7 text-pretty') #{product.description}
   section(aria-labelledby="product-specs" className='flex flex-col gap-3 border-t border-border pt-8')
     h2#product-specs(className='m-0 text-[11px] font-normal uppercase leading-4 tracking-[0.16em] text-muted-foreground') Details
+    if !product.price.isTaxInclusive
+      span(className='-mt-3 text-[11px] leading-4 text-muted-foreground') Taxes calculated at checkout
     dl(className='m-0 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-x-6 gap-y-2.5 text-[13px] leading-5')
       each row in details key row.id
         fragment
           dt(className='text-muted-foreground') #{row.label}
           dd(className='m-0 break-words') #{row.value}
-  PhotoCredit(credit={model.credit} className='text-[11px] leading-4 text-muted-foreground/70')

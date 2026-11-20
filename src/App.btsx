@@ -4,6 +4,7 @@ import { Outlet, useMatches } from "@octanejs/tanstack-router";
 import { useEffect } from "octane";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
+import Farfetch from "./components/Farfetch.btsx";
 props {}:{}
 setup
   // Product item pages run edge to edge; every other page keeps the centered 7xl column.

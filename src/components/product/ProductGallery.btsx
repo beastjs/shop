@@ -1,0 +1,33 @@
+import type { ProductMedia } from "@/lib/product/types";
+import { thumbSrc } from "@/lib/product/gallery";
+
+// Thumbnail rail: a column beside the preview on desktop, a row under it on phones.
+// Hover, focus or click selects a thumbnail; the selected one is full strength with a marker bar.
+props {images, active, name, onSelect}: { images: ProductMedia[], active: number, name: string, onSelect: (index: number) => void }
+div(
+  ~ role="group"
+  ~ aria-label={`${name} thumbnails`}
+  ~ className='flex shrink-0 gap-3 overflow-x-auto px-4 mt-10 pb-1 sm:flex-col sm:overflow-x-visible sm:overflow-y-auto sm:px-0 sm:pb-0 sm:pr-3 lg:max-h-[calc(100svh-var(--topbar-height)-4rem)]'
+  ~ )
+  each image, index in images key image.id
+    button(
+      ~ type="button"
+      ~ aria-label={`Show image ${index + 1} of ${images.length}`}
+      ~ aria-pressed={index === active}
+      ~ onMouseEnter={() => onSelect(index)}
+      ~ onFocus={() => onSelect(index)}
+      ~ onClick={() => onSelect(index)}
+      ~ className='group/thumb relative w-[72px] shrink-0 cursor-pointer appearance-none border-0 bg-transparent p-0 outline-none sm:w-[90px]'
+      ~ )
+      span(className={`block aspect-[4/5] overflow-hidden bg-[#f4f3f1] transition-opacity duration-200 ease-out dark:bg-[#1d1d1c] ${index === active ? 'opacity-100' : 'opacity-50 group-hover/thumb:opacity-100'} group-focus-visible/thumb:ring-2 group-focus-visible/thumb:ring-ring`})
+        img(
+          ~ src={thumbSrc(image.url)}
+          ~ alt=""
+          ~ width={90}
+          ~ height={112}
+          ~ loading="eager"
+          ~ decoding="async"
+          ~ className='block h-full w-full object-cover'
+          ~ )
+      // Marker: under the thumb on phones, to its right on desktop.
+      span(aria-hidden="true" className={`absolute right-0 -bottom-1.5 left-0 h-0.5 bg-foreground transition-opacity duration-200 sm:top-0 sm:-right-1.5 sm:bottom-0 sm:left-auto sm:h-auto sm:w-0.5 ${index === active ? 'opacity-100' : 'opacity-0'}`})

@@ -1,14 +1,26 @@
 import { Link, useLoaderData } from "@octanejs/tanstack-router";
+import { useState } from "octane";
 import type { ProductDetailResult } from "../lib/product/detail-types";
+import { galleryImages } from "../lib/product/gallery";
+import ProductGallery from "../components/product/ProductGallery.btsx";
 import ProductPreview from "../components/product/ProductPreview.btsx";
 import ProductSidebar from "../components/product/ProductSidebar.btsx";
 
-// Product item page: gallery fills the left, details sidebar sits sticky on the right (stacked on phones).
+// Product item page: thumbnails + one large preview on the left, details sidebar sticky on the right.
+// On phones: preview, then a thumbnail row, then details.
 setup
   const result = useLoaderData({ strict: false }) as ProductDetailResult
+  const images = result ? galleryImages(result.product.media) : []
+  const [active, setActive] = useState(0)
+  // Guard against a stale index if the product (and its photo count) changes under us.
+  const current = active < images.length ? active : 0
 if result
   div(className='grid w-full lg:grid-cols-[minmax(0,1fr)_minmax(380px,480px)] lg:items-start')
-    ProductPreview(media={result.product.media} name={result.product.name})
+    section(aria-label={`${result.product.name} images`} className='flex flex-col-reverse gap-4 sm:flex-row sm:gap-3 sm:p-4 lg:sticky lg:top-[var(--topbar-height)] lg:p-8')
+      if images.length > 1
+        ProductGallery(images={images} active={current} name={result.product.name} onSelect={setActive})
+      div(className='min-w-0 flex-1')
+        ProductPreview(images={images} active={current} name={result.product.name})
     ProductSidebar(product={result.product} category={result.category})
 else
   section(className='flex min-h-[60svh] flex-col items-center justify-center gap-4 px-4 text-center')

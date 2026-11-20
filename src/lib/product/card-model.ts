@@ -30,15 +30,19 @@ const EDITION = /^(No\. \d+|\S+)\s+(.+)$/;
 
 const str = (value: unknown) => (typeof value === "string" && value ? value : undefined);
 
+/** Unsplash attribution for one photo, when its metadata carries it. */
+export function photoCredit(image: ProductMedia | undefined): CardModel["credit"] {
+  const name = str(image?.metadata?.photographerName);
+  const url = str(image?.metadata?.photographerUrl);
+  const unsplashUrl = str(image?.metadata?.unsplashUrl);
+  return name && url && unsplashUrl ? { name, url, unsplashUrl } : undefined;
+}
+
 export function toCardModel(item: ProductCardItem): CardModel {
   const { name, sku, price, media } = item;
   const image =
     media.find((m) => m.isPrimary && m.type === "image" && m.url) ??
     media.find((m) => m.type === "image" && m.url);
-
-  const creditName = str(image?.metadata?.photographerName);
-  const creditUrl = str(image?.metadata?.photographerUrl);
-  const unsplashUrl = str(image?.metadata?.unsplashUrl);
 
   const money = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -53,10 +57,7 @@ export function toCardModel(item: ProductCardItem): CardModel {
   return {
     image,
     alt: image?.altText ?? name,
-    credit:
-      creditName && creditUrl && unsplashUrl
-        ? { name: creditName, url: creditUrl, unsplashUrl }
-        : undefined,
+    credit: photoCredit(image),
     price: money.format(current),
     wasPrice: onSale ? money.format(price.basePrice) : undefined,
     onSale,

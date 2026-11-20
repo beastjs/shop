@@ -1,45 +1,38 @@
-import { useState } from "octane";
 import type { ProductMedia } from "@/lib/product/types";
-import { Icon } from "@/lib/icons";
+import { previewSrc, PREVIEW_WIDTH } from "@/lib/product/gallery";
+import { photoCredit } from "@/lib/product/card-model";
+import PhotoCredit from "./cards/PhotoCredit.btsx";
 
-module
-  // Two rows of the 2-up grid show before "Show more" — enough to judge the piece without a long scroll.
-  const INITIAL = 4
-
-// Image gallery for the product item page: a seamless 2-up grid (1-up on phones) with hairline gutters.
-props {media, name}: { media: ProductMedia[], name: string }
+// The one large image. Every photo is stacked and preloaded so switching on hover is instant;
+// only the active one is visible, with a short crossfade. Under the main sharp photo sits the card's
+// own 400px copy (already in the browser cache from the list), so something paints on frame one
+// even when the hover prefetch didn't happen (touch, direct link).
+props {images, active, name}: { images: ProductMedia[], active: number, name: string }
 setup
-  const images = media
-    .filter(m => m.type === 'image' && m.url)
-    .sort((a, b) => Number(b.isPrimary) - Number(a.isPrimary) || a.sortOrder - b.sortOrder)
-  const [expanded, setExpanded] = useState(false)
-  const visible = expanded ? images : images.slice(0, INITIAL)
-  // The grid is always at least 2x2; missing shots become quiet empty tiles so the frame holds its shape.
-  const fillers = Array.from({ length: Math.max(0, INITIAL - visible.length) }, (_, i) => i)
-section(aria-label={`${name} images`} className='relative w-full')
-  div(className='grid grid-cols-2 gap-px')
-    each image, index in visible key image.id
-      figure(className='m-0 aspect-square overflow-hidden bg-[#f4f3f1] dark:bg-[#1d1d1c]')
+  // Credit always names the photographer of the photo on screen, not just the primary one.
+  const credit = photoCredit(images[active])
+figure(className='relative m-0 aspect-[4/5] w-full overflow-hidden bg-[#f4f3f1] lg:aspect-auto lg:h-[calc(100svh-var(--topbar-height)-4rem)] dark:bg-[#1d1d1c]')
+  each image, index in images key image.id
+    span(aria-hidden={index !== active} className={`absolute inset-0 transition-opacity duration-200 ease-out motion-reduce:transition-none ${index === active ? 'opacity-100' : 'opacity-0'}`})
+      // Only the primary photo has a cached card-size copy; the others are preloaded sharp on hover.
+      if index === 0
         img(
           ~ src={image.url}
-          ~ alt={image.altText ?? name}
-          ~ width={840}
-          ~ height={840}
-          ~ className='block h-full w-full object-cover'
-          ~ loading={index < 2 ? 'eager' : 'lazy'}
-          ~ fetchPriority={index === 0 ? 'high' : 'auto'}
-          ~ decoding='async'
+          ~ alt=""
+          ~ aria-hidden="true"
+          ~ decoding="async"
+          ~ className='absolute inset-0 block h-full w-full scale-[1.02] object-cover blur-[2px]'
           ~ )
-    each slot in fillers key slot
-      div(aria-hidden="true" className='aspect-square bg-[#f4f3f1] dark:bg-[#1d1d1c]')
-  if images.length > INITIAL
-    div(className='flex justify-center py-6')
-      button(
-        ~ type='button'
-        ~ aria-expanded={expanded}
-        ~ onClick={() => setExpanded(!expanded)}
-        ~ className='inline-flex h-11 items-center gap-2 rounded-full border border-border bg-background px-5 text-[13px] leading-none transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring'
+      img(
+        ~ src={previewSrc(image.url)}
+        ~ alt={index === active ? (image.altText ?? name) : ''}
+        ~ width={PREVIEW_WIDTH}
+        ~ height={PREVIEW_WIDTH * 1.25}
+        ~ loading={index === 0 ? 'eager' : 'lazy'}
+        ~ fetchPriority={index === 0 ? 'high' : 'auto'}
+        ~ decoding="async"
+        ~ className='absolute inset-0 block h-full w-full object-cover'
         ~ )
-        span #{expanded ? 'Show less' : `Show all ${images.length}`}
-        span(aria-hidden="true" className={expanded ? 'rotate-180 transition-transform' : 'transition-transform'})
-          Icon(name='arrow-right' size={14} className='rotate-90')
+  if credit
+    div(className='absolute bottom-3 left-3 max-w-[calc(100%-1.5rem)] rounded-full bg-background/80 px-3 py-1.5 text-[11px] leading-4 text-muted-foreground backdrop-blur-sm')
+      PhotoCredit(credit={credit})
