@@ -1,0 +1,40 @@
+import type { ProductCardItem } from '@/lib/product/card-types'
+import { toCardModel, fragranceDetails } from '@/lib/product/card-model'
+import { cartActions } from "@/features/cart";
+import CardMedia from "./CardMedia.btsx";
+import CardLink from "./CardLink.btsx";
+import PhotoCredit from "./PhotoCredit.btsx";
+
+module
+  // Each scent family gets its own wash, so the grid reads like a fragrance wall.
+  const familyWash: Record<string, string> = {
+    Citrus: 'from-[#fbf3d6] to-[#f6e7b8] dark:from-[#2e2a17] dark:to-[#3a3216]',
+    Amber: 'from-[#f8e8d8] to-[#efd2b4] dark:from-[#30241a] dark:to-[#3d2b1b]',
+    Floral: 'from-[#fbe9ec] to-[#f3d3da] dark:from-[#2f1e22] dark:to-[#3b2329]',
+    Woody: 'from-[#ebe8df] to-[#d9d3c3] dark:from-[#25231d] dark:to-[#2f2c24]',
+  }
+
+// Fragrance: an arch-framed bottle on a scent-tinted wash; the scent leads, concentration follows.
+props {item, priority = false}: { item: ProductCardItem, priority?: boolean }
+setup
+  const model = toCardModel(item)
+  const notes = fragranceDetails(model.productType)
+  const wash = familyWash[notes.family ?? ''] ?? 'from-muted to-muted'
+  const addToCart = () => cartActions.add(item)
+article.product-card(className='group/product relative flex flex-col gap-4 p-1.5 sm:p-2')
+  div(className={`rounded-[28px] bg-gradient-to-b px-4 pt-6 pb-4 sm:px-6 sm:pt-8 ${wash}`})
+    CardMedia(model={model} priority={priority} onAdd={addToCart} className='aspect-[3/4] rounded-t-[999px] rounded-b-2xl bg-background/40')
+      if notes.family
+        span(className='absolute top-1/4 left-1/2 -translate-x-1/2 rounded-full bg-background/85 px-2.5 py-1 text-[9px] uppercase leading-none tracking-[0.24em] text-foreground backdrop-blur-sm') #{notes.family}
+  div(className='flex flex-col items-center gap-1 px-1 text-center')
+    if model.edition
+      span(className='font-serif text-[11px] italic leading-none text-muted-foreground') #{model.edition}
+    h3(className='m-0 max-w-full truncate font-serif text-xl font-normal italic leading-7')
+      CardLink(name={notes.scent || model.productType})
+    if notes.concentration
+      span(className='text-[10px] uppercase leading-4 tracking-[0.2em] text-muted-foreground') #{notes.concentration}
+    p(className='m-0 mt-1 flex items-baseline gap-2 text-sm leading-5 tabular-nums')
+      if model.wasPrice
+        span(className='text-xs text-muted-foreground line-through') #{model.wasPrice}
+      span #{model.price}
+    PhotoCredit(credit={model.credit} className='max-w-full text-[10px] leading-4 text-muted-foreground')

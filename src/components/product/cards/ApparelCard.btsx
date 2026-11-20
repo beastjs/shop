@@ -1,0 +1,26 @@
+import type { ProductCardItem } from '@/lib/product/card-types'
+import { toCardModel } from '@/lib/product/card-model'
+import { cartActions } from "@/features/cart";
+import CardMedia from "./CardMedia.btsx";
+import CardLink from "./CardLink.btsx";
+import PhotoCredit from "./PhotoCredit.btsx";
+
+// Ready-to-wear: tall editorial crop, square corners, quiet uppercase type — a lookbook, not a catalog.
+props {item, priority = false}: { item: ProductCardItem, priority?: boolean }
+setup
+  const model = toCardModel(item)
+  const addToCart = () => cartActions.add(item)
+article.product-card(className='group/product relative flex flex-col gap-3 p-1.5 sm:p-2')
+  CardMedia(model={model} priority={priority} onAdd={addToCart} className='aspect-[3/4] bg-muted' imgClassName='object-top')
+    if model.discount
+      span(className='absolute top-0 left-0 bg-foreground px-2 py-1 text-[10px] font-medium leading-none tracking-[0.12em] text-background tabular-nums') −#{model.discount}%
+  div(className='flex flex-col gap-1.5 px-0.5')
+    if model.edition
+      span(className='text-[10px] uppercase leading-none tracking-[0.22em] text-muted-foreground') #{model.edition} line
+    h3(className='m-0 truncate text-[13px] font-normal uppercase leading-5 tracking-[0.06em]')
+      CardLink(name={model.productType} className='after:rounded-none')
+    p(className='m-0 flex items-baseline gap-2 text-[13px] leading-5 tabular-nums')
+      span #{model.price}
+      if model.wasPrice
+        span(className='text-muted-foreground line-through') #{model.wasPrice}
+    PhotoCredit(credit={model.credit} className='text-[10px] leading-4 text-muted-foreground')

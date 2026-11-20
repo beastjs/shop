@@ -1,9 +1,9 @@
 import ProductCard from "./ProductCard.btsx";
 import type { ProductCardItem } from "@/lib/product/card-types";
 
-props { products }: { products: ProductCardItem[] }
+props { products, category }: { products: ProductCardItem[], category?: string }
 
 div(className="grid w-full grid-cols-2 border-collapse sm:grid-cols-2 lg:grid-cols-3")
   each product, index in products key product.id
     // Only the first row loads eagerly; the rest decode lazily so scrolling isn't blocked by image work.
-    ProductCard({...product} priority={index < 3})
+    ProductCard(item={product} category={category} priority={index < 3})

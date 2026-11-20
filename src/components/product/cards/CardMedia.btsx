@@ -1,0 +1,32 @@
+import type { ClassValue, OctaneNode } from "octane";
+import type { CardModel } from "@/lib/product/card-model";
+import RunnerButton from "../../../ui/RunnerButton.btsx";
+import { cn } from "@/lib/utils";
+
+module
+  interface CardMediaProps {
+    model: CardModel
+    priority?: boolean
+    onAdd: () => void
+    className?: ClassValue
+    imgClassName?: ClassValue
+    children?: OctaneNode
+  }
+
+// Shared image frame + the one Add to cart button every category card uses.
+// Categories restyle the frame; the button, its placement and its hover reveal never change.
+props {model, priority = false, onAdd, className, imgClassName, children}: CardMediaProps
+div.product-card-media(className={cn('relative overflow-hidden', className)})
+  img(
+    ~ alt={model.alt}
+    ~ width={420}
+    ~ height={420}
+    ~ src={model.image?.url}
+    ~ className={cn('product-card-img block h-full w-full object-cover', imgClassName)}
+    ~ loading={priority ? 'eager' : 'lazy'}
+    ~ fetchPriority={priority ? 'high' : 'auto'}
+    ~ decoding='async'
+    ~ )
+  | #{children}
+  div.product-card-cta(className='absolute inset-x-2 bottom-2 z-10 sm:inset-x-2.5 sm:bottom-2.5')
+    RunnerButton(className='w-full' label='Add to cart' paint={'var(--mac-blue)'} onClick={onAdd})

@@ -1,0 +1,26 @@
+import type { ProductCardItem } from '@/lib/product/card-types'
+import { toCardModel } from '@/lib/product/card-model'
+import { cartActions } from "@/features/cart";
+import CardMedia from "./CardMedia.btsx";
+import CardLink from "./CardLink.btsx";
+import PhotoCredit from "./PhotoCredit.btsx";
+
+// Bags: gallery-quiet. A tall uncropped frame, no ornament, and two hairline-light lines of type.
+props {item, priority = false}: { item: ProductCardItem, priority?: boolean }
+setup
+  const model = toCardModel(item)
+  const addToCart = () => cartActions.add(item)
+article.product-card(className='group/product relative flex flex-col gap-5 p-2 pb-8 sm:p-3 sm:pb-12')
+  CardMedia(model={model} priority={priority} onAdd={addToCart} className='aspect-[4/5] bg-[#f4f3f1] dark:bg-[#1d1d1c]')
+  div(className='flex flex-col gap-1.5')
+    div(className='flex items-baseline justify-between gap-6')
+      h3(className='m-0 min-w-0 truncate text-[13px] font-normal leading-5 tracking-[-0.005em]')
+        CardLink(name={model.productType} className='after:rounded-none')
+      p(className='m-0 flex shrink-0 items-baseline gap-2 text-[13px] font-light leading-5 tabular-nums')
+        if model.wasPrice
+          span(className='text-muted-foreground/70 line-through') #{model.wasPrice}
+        span #{model.price}
+    div(className='flex min-w-0 items-center justify-between gap-6 text-[11px] font-light leading-4 text-muted-foreground')
+      if model.edition
+        span(className='shrink-0') #{model.edition}
+      PhotoCredit(credit={model.credit} className='text-muted-foreground/60')

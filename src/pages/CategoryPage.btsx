@@ -11,7 +11,7 @@ setup
   const [query, setQuery] = useState("")
 
   const filteredProducts = useMemo(() => filterProducts(products, query))
-  const productGridProps = { products: filteredProducts }
+  const productGridProps = { products: filteredProducts, category: category?.slug }
 
 section(className="w-full overflow-x-clip py-6 sm:py-10")
   header(className="my-4 flex flex-col items-stretch gap-4 px-4 sm:my-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8")

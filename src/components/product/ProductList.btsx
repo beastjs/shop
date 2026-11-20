@@ -3,5 +3,5 @@ import ProductCard from "./ProductCard.btsx";
 div(className={"font-sans w-full h-fit leading-6"})
   div(className={"grid w-full h-full justify-center space-4 md:grid-cols-3"})
     each pod in pods key pod.id
-      ProductCard({...pod})
+      ProductCard(item={pod})
   div(className={"w-full mb-32"})

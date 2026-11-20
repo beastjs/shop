@@ -1,57 +1,29 @@
-import { Link } from "@octanejs/tanstack-router";
 import type { ProductCardItem } from '@/lib/product/card-types'
-import RunnerButton from "../../ui/RunnerButton.btsx";
-import { cartActions } from "@/features/cart";
+import DefaultCard from "./cards/DefaultCard.btsx";
+import ApparelCard from "./cards/ApparelCard.btsx";
+import BagsCard from "./cards/BagsCard.btsx";
+import PerfumeCard from "./cards/PerfumeCard.btsx";
+import PhoneCard from "./cards/PhoneCard.btsx";
+import AudioCard from "./cards/AudioCard.btsx";
+import GamingCard from "./cards/GamingCard.btsx";
+import SoftwareCard from "./cards/SoftwareCard.btsx";
 
-props {id, sku, name, price, media, priority = false}: ProductCardItem & { priority?: boolean }
-setup
-  const primaryImg = media.find(m => m.isPrimary && m.type === 'image' && m.url)
-    ?? media.find(m => m.type === 'image' && m.url)
-  const photographerName = typeof primaryImg?.metadata?.photographerName === 'string' ? primaryImg.metadata.photographerName : undefined
-  const photographerUrl = typeof primaryImg?.metadata?.photographerUrl === 'string' ? primaryImg.metadata.photographerUrl : undefined
-  const unsplashUrl = typeof primaryImg?.metadata?.unsplashUrl === 'string' ? primaryImg.metadata.unsplashUrl : undefined
-  // "$24" and "$28.50" — never "$28.5".
-  const money = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: price.currency || 'USD',
-    trailingZeroDisplay: 'stripIfInteger',
-  } as Intl.NumberFormatOptions)
-  const onSale = typeof price.salePrice === 'number' && price.salePrice < price.basePrice
-  const shortSku = sku.split('-').pop()
-  // The button is a sibling of the card link (not nested in it), so a click never navigates.
-  const addToCart = () => cartActions.add({ id, sku, name, price, media })
-article.product-card(key={id} className='group/product relative flex flex-col gap-3 p-1.5 sm:p-2')
-  div.product-card-media(className='relative aspect-square overflow-hidden rounded-lg bg-muted')
-    img(
-      ~ alt={primaryImg?.altText ?? name}
-      ~ width={420}
-      ~ height={420}
-      ~ src={primaryImg?.url}
-      ~ className='product-card-img block h-full w-full object-cover object-left-top'
-      ~ loading={priority ? 'eager' : 'lazy'}
-      ~ fetchPriority={priority ? 'high' : 'auto'}
-      ~ decoding='async'
-      ~ )
-    span(className='absolute top-2.5 left-2.5 rounded-full bg-background/90 px-2.5 py-1 text-[10px] font-medium uppercase leading-none tracking-[0.08em] text-foreground') Best seller
-    div.product-card-cta(className='absolute inset-x-2 bottom-2 z-10 sm:inset-x-2.5 sm:bottom-2.5')
-      RunnerButton(className='w-full' label='Add to cart' paint={'var(--mac-blue)'} onClick={addToCart})
-  div(className='flex flex-col gap-1 px-0.5')
-    div(className='flex items-baseline justify-between gap-3')
-      h3(className='min-w-0 truncate text-sm font-normal leading-5 sm:text-[15px]')
-        // Stretched link: the whole card is clickable without nesting the button inside an <a>.
-        Link(to="#" className='outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-ring') #{name}
-      p(className='flex shrink-0 items-baseline gap-1.5 text-sm leading-5 tabular-nums sm:text-[15px]')
-        if onSale
-          fragment
-            span(className='text-xs text-muted-foreground line-through') #{money.format(price.basePrice)}
-            span #{money.format(price.salePrice as number)}
-        else
-          span #{money.format(price.basePrice)}
-    div(className='flex min-w-0 items-center justify-between gap-3 text-[11px] leading-4 text-muted-foreground')
-      span(className='shrink-0 uppercase tracking-[0.08em]') #{shortSku}
-      if photographerName && photographerUrl && unsplashUrl
-        p(className='relative z-10 min-w-0 truncate')
-          | Photo by
-          a(href={photographerUrl} target="_blank" rel="noreferrer" className="mx-1 underline-offset-2 hover:underline") #{photographerName}
-          | on
-          a(href={unsplashUrl} target="_blank" rel="noreferrer" className="ml-1 underline-offset-2 hover:underline") Unsplash
+// Each line of commerce gets its own card; all of them share CardMedia's Add to cart button.
+props {item, category, priority = false}: { item: ProductCardItem, category?: string, priority?: boolean }
+switch category
+  case "apparel"
+    ApparelCard(item={item} priority={priority})
+  case "bags"
+    BagsCard(item={item} priority={priority})
+  case "perfumes"
+    PerfumeCard(item={item} priority={priority})
+  case "phones"
+    PhoneCard(item={item} priority={priority})
+  case "audio"
+    AudioCard(item={item} priority={priority})
+  case "gaming"
+    GamingCard(item={item} priority={priority})
+  case "software"
+    SoftwareCard(item={item} priority={priority})
+  default
+    DefaultCard(item={item} priority={priority})

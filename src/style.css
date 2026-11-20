@@ -336,7 +336,51 @@ a {
     transform: scale(1.03);
   }
 }
+/* ---------- Category cards ---------- */
+/* Audio: EQ meter idles flat-ish and bounces while the card is hovered or focused. */
+.audio-eq-bar {
+  transform-origin: bottom;
+  transform: scaleY(0.35);
+  transition: transform 200ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  html:not(.lenis-scrolling) .product-card:hover .audio-eq-bar,
+  .product-card:focus-within .audio-eq-bar {
+    animation: audio-eq 900ms ease-in-out infinite alternate;
+  }
+}
+@keyframes audio-eq {
+  from { transform: scaleY(0.25); }
+  to { transform: scaleY(1); }
+}
+
+/* Gaming: notched HUD corners; the edge lights up on hover. */
+.gaming-card,
+.gaming-card-media {
+  --notch: 12px;
+  clip-path: polygon(
+    var(--notch) 0, 100% 0, 100% calc(100% - var(--notch)),
+    calc(100% - var(--notch)) 100%, 0 100%, 0 var(--notch)
+  );
+}
+.gaming-card-media {
+  --notch: 8px;
+}
+.gaming-card {
+  box-shadow: inset 0 0 0 1px rgb(110 113 145 / 0.35);
+  transition: box-shadow 220ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  html:not(.lenis-scrolling) .gaming-card:hover,
+  .gaming-card:focus-within {
+    box-shadow: inset 0 0 0 1px #b6ff3b, inset 0 0 24px rgb(182 255 59 / 0.12);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .audio-eq-bar {
+    animation: none !important;
+  }
   .runner-trace,
   .runner:hover .runner-trace {
     transition: stroke-dashoffset 0ms, stroke-width 0ms;
