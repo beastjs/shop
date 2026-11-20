@@ -15,6 +15,7 @@
     "typecheck": "tsrx-tsc --noEmit",
     "check": "bun run typecheck && bun run build",
     "seed:categories": "convex run categories:seedCategoriesTable",
+    "seed:tag": "convex run seed:tagProducts '{\"skus\":[$1],\"tag\":$2}'",
     "seed:products": "bun scripts/seed-products.ts",
     "seed:gallery": "bun scripts/seed-gallery.ts",
     "icons:build": "bun scripts/build-icons.ts --svg src/lib/icons/svg --out src/lib/icons/icons.ts",

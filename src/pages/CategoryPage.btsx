@@ -13,10 +13,10 @@ setup
   const filteredProducts = useMemo(() => filterProducts(products, query))
   const productGridProps = { products: filteredProducts, category: category?.slug }
 
-section(className="w-full overflow-x-clip py-6 sm:py-10")
-  header(className="my-4 flex flex-col items-stretch gap-4 px-4 sm:my-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8")
-    h1(className="m-0 text-3xl font-semibold tracking-tight sm:text-4xl") #{category?.name ?? "Category not found"}
-    SearchBar(className="px-0 sm:max-w-3xl sm:px-0 md:px-0" placeholder={`Search ${category?.slug} by name or price`} onSearch={setQuery})
+section(className="w-full overflow-x-clip py-3 sm:py-10")
+  header(className="my-1 sm:my-4 flex items-center gap-4 px-4 sm:my-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8")
+    h1(className="m-0 text-xl sm:text-4xl font-apro") #{category?.name ?? "Category not found"}
+    SearchBar(className="px-0 sm:max-w-3xl sm:px-0 md:px-0" placeholder={`Search by name or price`} onSearch={setQuery})
   if category
     if products.length > 0
       if filteredProducts.length > 0

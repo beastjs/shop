@@ -1,4 +1,5 @@
-import { query } from "./_generated/server";
+import { query, type QueryCtx } from "./_generated/server";
+import type { Doc } from "./_generated/dataModel";
 import { v } from "convex/values";
 
 /** One product for its item page, addressed by category slug + SKU (both appear in the URL). */
@@ -140,5 +141,88 @@ export const listByCategory = query({
       category: { id: category._id, name: category.name, slug: category.slug },
       products: productsWithMedia,
     };
+  },
+});
+
+const FEATURED_TAG = "featured";
+const MAX_FEATURED = 4;
+
+/** Card-shaped product + its category, with just the primary image (enough for a compact row). */
+async function toSuggestion(ctx: QueryCtx, product: Doc<"products">, category: Doc<"categories">) {
+  const media = await ctx.db
+    .query("productMedia")
+    .withIndex("by_product_and_sort_order", (q) => q.eq("productId", product._id))
+    .take(4);
+  const primary = media.find((item) => item.isPrimary && item.type === "image") ?? media.find((item) => item.type === "image");
+  return {
+    id: product._id,
+    sku: product.sku,
+    name: product.name,
+    price: {
+      basePrice: product.basePrice,
+      currency: product.currency,
+      isTaxInclusive: product.isTaxInclusive,
+      ...(product.salePrice === undefined ? {} : { salePrice: product.salePrice }),
+      ...(product.taxRate === undefined ? {} : { taxRate: product.taxRate }),
+    },
+    media: primary
+      ? [
+          {
+            id: primary.externalId,
+            type: primary.type,
+            url: primary.url,
+            sortOrder: primary.sortOrder,
+            isPrimary: true,
+            ...(primary.altText === undefined ? {} : { altText: primary.altText }),
+            ...(primary.metadata === undefined ? {} : { metadata: primary.metadata }),
+          },
+        ]
+      : [],
+    category: { name: category.name, slug: category.slug },
+  };
+}
+
+const isListed = (product: Doc<"products"> | null): product is Doc<"products"> =>
+  product !== null && product.status === "active" && product.visibility === "visible";
+
+/**
+ * What to show in an empty cart: products tagged "featured" (if any), then one product from
+ * each category that isn't already featured.
+ */
+export const cartSuggestions = query({
+  args: {},
+  handler: async (ctx) => {
+    const featured: Awaited<ReturnType<typeof toSuggestion>>[] = [];
+    const featuredIds = new Set<string>();
+
+    const tags = await ctx.db
+      .query("productTags")
+      .withIndex("by_value", (q) => q.eq("value", FEATURED_TAG))
+      .take(20);
+    for (const tag of tags) {
+      if (featured.length >= MAX_FEATURED) break;
+      if (featuredIds.has(tag.productId)) continue;
+      const product = await ctx.db.get("products", tag.productId);
+      if (!isListed(product)) continue;
+      const category = await ctx.db.get("categories", product.categoryId);
+      if (!category) continue;
+      featuredIds.add(product._id);
+      featured.push(await toSuggestion(ctx, product, category));
+    }
+
+    const byCategory: Awaited<ReturnType<typeof toSuggestion>>[] = [];
+    const categories = await ctx.db.query("categories").take(50);
+    for (const category of categories) {
+      const candidates = await ctx.db
+        .query("products")
+        .withIndex("by_category_and_status_and_visibility", (q) =>
+          q.eq("categoryId", category._id).eq("status", "active").eq("visibility", "visible"),
+        )
+        .take(MAX_FEATURED + 1);
+      const pick = candidates.find((product) => !featuredIds.has(product._id));
+      if (pick) byCategory.push(await toSuggestion(ctx, pick, category));
+    }
+
+    return { featured, byCategory };
   },
 });

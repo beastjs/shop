@@ -171,3 +171,39 @@ export const addProductImages = internalMutation({
     return { added, missing };
   },
 });
+
+/**
+ * Adds a tag (e.g. "featured") to products by SKU. Internal: run via `npx convex run`.
+ * Idempotent — a product that already has the tag is left alone.
+ */
+export const tagProducts = internalMutation({
+  args: { skus: v.array(v.string()), tag: v.string() },
+  handler: async (ctx, args) => {
+    let tagged = 0;
+    let alreadyTagged = 0;
+    const missing: string[] = [];
+
+    for (const sku of args.skus) {
+      const product = await ctx.db
+        .query("products")
+        .withIndex("by_sku", (q) => q.eq("sku", sku))
+        .unique();
+      if (!product) {
+        missing.push(sku);
+        continue;
+      }
+      const tags = await ctx.db
+        .query("productTags")
+        .withIndex("by_product", (q) => q.eq("productId", product._id))
+        .take(100);
+      if (tags.some((t) => t.value === args.tag)) {
+        alreadyTagged += 1;
+        continue;
+      }
+      await ctx.db.insert("productTags", { productId: product._id, value: args.tag });
+      tagged += 1;
+    }
+
+    return { tagged, alreadyTagged, missing };
+  },
+});

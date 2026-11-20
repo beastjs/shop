@@ -250,7 +250,9 @@ export default defineSchema({
   productTags: defineTable({
     productId: v.id("products"),
     value: v.string(),
-  }).index("by_product", ["productId"]),
+  })
+    .index("by_product", ["productId"])
+    .index("by_value", ["value"]),
 
   productCertifications: defineTable({
     productId: v.id("products"),
