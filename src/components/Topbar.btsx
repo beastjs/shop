@@ -22,7 +22,7 @@ header#topbar(className='fixed top-0 z-100 h-16 w-full bg-background/90 px-3 bac
         span(className='hidden md:flex opacity-60 font-sans text-light') Online
     nav#navbar(className='flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto overscroll-x-contain text-sm sm:gap-1 md:flex-none md:overflow-visible')
       each category in productCategories key category.slug
-        Link(to={'/' + category.slug} activeProps={{className: 'active-nav-item'}} className='shrink-0 rounded-sm px-2 py-1.25 font-adin text-[12px] md:text-xs portrait:tracking-normal uppercase whitespace-nowrap md:px-2 md:py-1') #{category.name}
+        Link(to={'/' + category.slug} activeProps={{className: 'active-nav-item'}} className='shrink-0 rounded-sm font-adin text-[12px] md:text-xs portrait:tracking-normal uppercase whitespace-nowrap px-2 py-1') #{category.name}
     div(className='flex items-center gap-3')
       CartButton
       if user
